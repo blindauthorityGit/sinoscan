@@ -18,6 +18,19 @@ import Skizze from "../assets/icons/skizze.svg";
 import DetailiertesDesign from "../assets/icons/detailiertesDesign.svg";
 import Prototyp from "../assets/icons/prototyp.svg";
 
+import Benutzerfreundlichkeit from "../assets/icons/benutzerfreundlichkeit.svg";
+import Aesthetic from "../assets/icons/aesthetic.svg";
+import Material from "../assets/icons/material.svg";
+import Kosten from "../assets/icons/kosten.svg";
+import Innovation from "../assets/icons/innovation.svg";
+import Ergonomie from "../assets/icons/ergonomie.svg";
+import Langlebigkeit from "../assets/icons/langlebigkeit.svg";
+import Skalierbarkeit from "../assets/icons/skalierbarkeit.svg";
+
+import B2C from "../assets/icons/b2c.svg";
+import B2B from "../assets/icons/b2b.svg";
+import Nische from "../assets/icons/nische.svg";
+
 export default {
     steps: [
         {
@@ -64,7 +77,7 @@ export default {
             subline: "Bitte wählen Sie den für Ihr Projekt am besten geeigneten Service aus:",
 
             image: Two,
-            multipleChoice: true,
+            multipleChoice: false,
             boxes: [
                 {
                     id: 1,
@@ -98,63 +111,104 @@ export default {
         },
         {
             id: 3,
-            headline: "Step 2 Headline",
+            headline: "Welche spezifischen Anforderungen haben Sie an das Design?",
+            subline: "Bitte wählen Sie alle zutreffenden Optionen aus:",
             image: Three,
             multipleChoice: true,
             boxes: [
                 {
                     id: 1,
-                    text: "Option 1",
-                    icon: "/path/to/icon1.svg",
+                    headline: "Benutzerfreundlichkeit",
+                    // text: "Nur eine grundlegende Idee oder Konzept",
+                    icon: Benutzerfreundlichkeit,
                     selected: false,
                 },
                 {
                     id: 2,
-                    text: "Option 2",
-                    icon: "/path/to/icon2.svg",
+                    headline: "Ästhetik und Stil",
+                    // text: "Handgezeichnete Skizzen oder einfache digitale Entwürfe vorhanden",
+                    icon: Aesthetic,
+                    selected: false,
+                },
+                {
+                    id: 3,
+                    headline: "Materialien und Nachhaltigkeit",
+                    // text: "Detaillierte Designzeichnungen oder 3D-Modelle sind bereits erstellt",
+                    icon: Material,
+                    selected: false,
+                },
+                {
+                    id: 4,
+                    headline: "Kostenoptimierung",
+                    // text: "Ein physischer oder funktionaler Prototyp wurde bereits entwickelt",
+                    icon: Kosten,
+                    selected: false,
+                },
+                {
+                    id: 5,
+                    headline: "Innovative Technologien",
+                    // text: "Nur eine grundlegende Idee oder Konzept",
+                    icon: Innovation,
+                    selected: false,
+                },
+                {
+                    id: 6,
+                    headline: "Ergonomie und Komfort",
+                    // text: "Handgezeichnete Skizzen oder einfache digitale Entwürfe vorhanden",
+                    icon: Ergonomie,
+                    selected: false,
+                },
+                {
+                    id: 7,
+                    headline: "Langlebigkeit und Haltbarkeit",
+                    // text: "Detaillierte Designzeichnungen oder 3D-Modelle sind bereits erstellt",
+                    icon: Langlebigkeit,
+                    selected: false,
+                },
+                {
+                    id: 8,
+                    headline: "Skalierbarkeit",
+                    // text: "Ein physischer oder funktionaler Prototyp wurde bereits entwickelt",
+                    icon: Skalierbarkeit,
                     selected: false,
                 },
             ],
         },
         {
             id: 4,
-            headline: "Step 2 Headline",
-            image: "/path/to/image2.jpg",
+            headline: "Für welchen Markt oder welche Zielgruppe ist das Produkt bestimmt?",
+            image: Four,
             multipleChoice: true,
             boxes: [
                 {
                     id: 1,
-                    text: "Option 1",
-                    icon: "/path/to/icon1.svg",
+                    headline: "B2C",
+                    text: "Verbrauchermarkt",
+                    icon: B2C,
                     selected: false,
                 },
                 {
                     id: 2,
-                    text: "Option 2",
-                    icon: "/path/to/icon2.svg",
+                    headline: "B2B",
+                    text: "Geschäftsmarkt",
+                    icon: B2B,
+                    selected: false,
+                },
+                {
+                    id: 3,
+                    headline: "Spezialisierte Branche",
+                    text: "oder Nische",
+                    icon: Nische,
                     selected: false,
                 },
             ],
         },
         {
             id: 5,
-            headline: "Step 2 Headline",
-            image: "/path/to/image2.jpg",
-            multipleChoice: true,
-            boxes: [
-                {
-                    id: 1,
-                    text: "Option 1",
-                    icon: "/path/to/icon1.svg",
-                    selected: false,
-                },
-                {
-                    id: 2,
-                    text: "Option 2",
-                    icon: "/path/to/icon2.svg",
-                    selected: false,
-                },
-            ],
+            headline: "Bitte geben Sie eine kurze Beschreibung Ihres Projekts ein.",
+            image: Five,
+            multipleChoice: false,
+            component: "textarea", // Indicates this step should render a Dropzone component
         },
         {
             id: 6,

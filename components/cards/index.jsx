@@ -13,7 +13,7 @@ const Card = ({ length, headline, text, icon, id, isActive, onClick, answer }) =
             colSpanClass = "col-span-3";
             break;
         default:
-            colSpanClass = "col-span-1"; // Default fallback if length is not 4 or greater than 4
+            colSpanClass = "col-span-3"; // Default fallback if length is not 4 or greater than 4
             break;
     }
 
@@ -31,7 +31,7 @@ const Card = ({ length, headline, text, icon, id, isActive, onClick, answer }) =
 
     // Styles for active and inactive states
     const activeStyle = {
-        scale: 1.1,
+        scale: 1.05,
         background: "linear-gradient(to bottom, #002A3A, #0C4B63)", // Gradient from #002A3A to #0C4B63
         transition: { type: "spring", stiffness: 300 },
         color: "white",
@@ -56,7 +56,9 @@ const Card = ({ length, headline, text, icon, id, isActive, onClick, answer }) =
     // return <div className={`col-span-${12 / length}`}>BUBUBUBU</div>;
     return (
         <motion.div
-            className={`${colSpanClass} h-72 p-4 font-sans text-primary rounded-lg bg-white flex flex-col justify-around items-center shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out`}
+            className={`${colSpanClass} ${
+                length > 4 ? "h-48" : "h-72"
+            } p-4 font-sans text-primary rounded-lg bg-white flex flex-col justify-around items-center shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out`}
             whileHover={hoverAnimation}
             initial={initialStyle}
             animate={isActive ? activeStyle : inactiveStyle}
@@ -77,7 +79,7 @@ const Card = ({ length, headline, text, icon, id, isActive, onClick, answer }) =
             )}
             <img src={icon.src} alt="" className="w-16 h-16" style={isActive ? activeIconStyle : null} />
             <h3 className="font-semibold text-xl hyphens-auto text-center">{headline}</h3>
-            <p className="text-sm text-center">{text}</p>
+            {length > 4 ? null : <p className="text-sm text-center">{text}</p>}
         </motion.div>
     );
 };

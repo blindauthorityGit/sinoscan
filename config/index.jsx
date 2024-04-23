@@ -5,6 +5,7 @@ import Four from "../assets/4.jpg";
 import Five from "../assets/5.jpg";
 import Six from "../assets/6.jpg";
 import Seven from "../assets/7.jpg";
+import Eight from "../assets/8.jpg";
 
 // ICONS
 
@@ -212,63 +213,35 @@ export default {
         },
         {
             id: 6,
-            headline: "Step 2 Headline",
-            image: "/path/to/image2.jpg",
-            multipleChoice: true,
-            boxes: [
-                {
-                    id: 1,
-                    text: "Option 1",
-                    icon: "/path/to/icon1.svg",
-                    selected: false,
-                },
-                {
-                    id: 2,
-                    text: "Option 2",
-                    icon: "/path/to/icon2.svg",
-                    selected: false,
-                },
-            ],
+            headline: "Haben Sie bestehende Designmaterialien oder Dokumente, die Sie mit uns teilen möchten?",
+            subline:
+                "Bitte beachten Sie, dass die maximale Dateigröße 20 MB beträgt und die folgenden Dateiformate unterstützt werden: PDF, DOCX, JPEG, PNG, TIFF.",
+            image: Six,
+            multipleChoice: false,
+            component: "dropzone", // Indicates this step should render a Dropzone component
         },
         {
             id: 7,
-            headline: "Step 2 Headline",
-            image: "/path/to/image2.jpg",
-            multipleChoice: true,
-            boxes: [
-                {
-                    id: 1,
-                    text: "Option 1",
-                    icon: "/path/to/icon1.svg",
-                    selected: false,
-                },
-                {
-                    id: 2,
-                    text: "Option 2",
-                    icon: "/path/to/icon2.svg",
-                    selected: false,
-                },
-            ],
+            headline: "Was ist Ihr Budget & Zeitrahmen für dieses Designprojekt?",
+            // subline:
+            //     "Bitte beachten Sie, dass die maximale Dateigröße 20 MB beträgt und die folgenden Dateiformate unterstützt werden: PDF, DOCX, JPEG, PNG, TIFF.",
+            image: Seven,
+            multipleChoice: false,
+            component: "options", // Indicates this step should render a Dropzone component
         },
         {
-            id: 8,
-            headline: "Step 2 Headline",
-            image: "/path/to/image2.jpg",
-            multipleChoice: true,
-            boxes: [
-                {
-                    id: 1,
-                    text: "Option 1",
-                    icon: "/path/to/icon1.svg",
-                    selected: false,
-                },
-                {
-                    id: 2,
-                    text: "Option 2",
-                    icon: "/path/to/icon2.svg",
-                    selected: false,
-                },
-            ],
+            id: 9,
+            headline: "Fast geschafft! Geben Sie bitte noch Ihre Daten an.",
+            image: Eight,
+            multipleChoice: false,
+            component: "personal", // Indicates this step should render a Dropzone component
+        },
+        {
+            id: 10,
+            headline: "Bitte prüfen Sie Ihre Daten",
+            image: Eight,
+            multipleChoice: false,
+            component: "summary", // Indicates this step should render a Dropzone component
         },
     ],
 };

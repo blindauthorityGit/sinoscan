@@ -13,10 +13,75 @@ import config from "../config";
 //IMAGES
 import Logo from "../assets/logo.png";
 
+//COMPS
+import TextareaComponent from "../components/textArea";
+import MyDropzone from "../components/dropzone";
+import Budget from "../components/budget";
+import Personal from "../components/personal";
+import Summary from "../components/summary";
+
 export default function Home() {
     const [currentStep, setCurrentStep] = useState(0);
+    const currentStepConfig = config.steps[currentStep];
+    // const [textValue, setTextValue] = useState(""); // Initialize the state
+
     // const [activeIds, setActiveIds] = useState([]);
-    const { activeIds, setActiveIds, isNextButtonEnabled } = useStore();
+    const {
+        activeIds,
+        setActiveIds,
+        textValue,
+        setTextValue,
+        isNextButtonEnabled,
+        budgetOption,
+        timeframeOption,
+        personalInfo,
+    } = useStore();
+    const nextButtonEnabled = isNextButtonEnabled(
+        currentStep,
+        config.steps[currentStep].multipleChoice,
+        activeIds,
+        textValue,
+        currentStepConfig.component,
+        budgetOption,
+        timeframeOption,
+        personalInfo
+    );
+    const renderComponent = (step, activeIds, handleCardClick) => {
+        if (step.component) {
+            switch (step.component) {
+                case "dropzone":
+                    return <MyDropzone onFilesAdded={(files) => console.log(files)} />;
+                case "options":
+                    return <Budget />;
+                case "personal":
+                    return <Personal />;
+                case "summary":
+                    return <Summary />;
+                case "textarea":
+                    return <TextareaComponent value={textValue} onChange={handleTextChange} />;
+
+                default:
+                    break; // Handle other types or throw an error
+            }
+        } else {
+            return step.boxes.map((box, index) => {
+                const isActive = activeIds[currentStep] && activeIds[currentStep].includes(box.id);
+                return (
+                    <Card
+                        key={box.id} // Using box.id instead of index for key if id is unique
+                        {...box}
+                        length={config.steps[currentStep].boxes.length}
+                        isActive={isActive}
+                        onClick={() => handleCardClick(box.id)}
+                    />
+                );
+            });
+        }
+    };
+
+    const handleTextChange = (event) => {
+        setTextValue(event.target.value); // Update the state on text change
+    };
 
     const handleCardClick = (id) => {
         const stepActiveIds = activeIds && activeIds[currentStep] ? activeIds[currentStep] : [];
@@ -43,20 +108,9 @@ export default function Home() {
             setActiveIds([]); // Reset selections when moving back
         }
     };
-
-    const nextButtonStyle = isNextButtonEnabled(currentStep, config.steps[currentStep].multipleChoice, activeIds)
-        ? {
-              backgroundColor: "#007bff", // Primary color
-              color: "white",
-              opacity: 1,
-              cursor: "pointer",
-          }
-        : {
-              backgroundColor: "#cccccc", // Disabled color
-              color: "white",
-              opacity: 0.5,
-              cursor: "not-allowed",
-          };
+    const nextButtonStyle = nextButtonEnabled
+        ? { backgroundColor: "#007bff", color: "white", opacity: 1, cursor: "pointer" }
+        : { backgroundColor: "#cccccc", color: "white", opacity: 0.5, cursor: "not-allowed" };
 
     // const isNextButtonEnabled = () => {
     //     if (config.steps[currentStep].multipleChoice) {
@@ -104,26 +158,7 @@ export default function Home() {
                     <p className="mt-6 text-sm">{config.steps[currentStep].subline}</p>
                 </div>
                 <div className="bg-lightGray p-8 grid grid-cols-12 gap-4 mt-8">
-                    {config.steps[currentStep].boxes.map((e, i) => {
-                        const isActive =
-                            activeIds && activeIds[currentStep] ? activeIds[currentStep].includes(i) : false;
-
-                        return (
-                            <Card
-                                length={config.steps[currentStep].boxes.length}
-                                headline={e.headline}
-                                text={e.text}
-                                icon={e.icon}
-                                answer={e.headline}
-                                id={i}
-                                isActive={isActive}
-                                onClick={(e) => {
-                                    console.log(e.currentTarget.dataset.answer);
-                                    handleCardClick(i); // Simplify the onClick handler
-                                }}
-                            ></Card>
-                        );
-                    })}
+                    {renderComponent(currentStepConfig, activeIds, handleCardClick)}
                 </div>
                 <div className="buttons flex mt-8">
                     <button
@@ -137,9 +172,7 @@ export default function Home() {
                         className="px-8 py-2 border border-1 font-semibold"
                         onClick={() => setCurrentStep(currentStep + 1)}
                         style={nextButtonStyle}
-                        disabled={
-                            !isNextButtonEnabled(currentStep, config.steps[currentStep].multipleChoice, activeIds)
-                        }
+                        disabled={!nextButtonEnabled}
                     >
                         weiter
                     </button>

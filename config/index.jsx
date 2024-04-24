@@ -41,6 +41,7 @@ export default {
             image: One,
             multipleChoice: false,
             hasBoxes: true,
+            category: "services",
             boxes: [
                 {
                     id: 1,
@@ -76,9 +77,9 @@ export default {
             id: 2,
             headline: "In welchem Stadium befindet sich Ihr Designkonzept?",
             subline: "Bitte wählen Sie den für Ihr Projekt am besten geeigneten Service aus:",
-
             image: Two,
             multipleChoice: false,
+            category: "stages",
             boxes: [
                 {
                     id: 1,
@@ -116,6 +117,7 @@ export default {
             subline: "Bitte wählen Sie alle zutreffenden Optionen aus:",
             image: Three,
             multipleChoice: true,
+            category: "requirements",
             boxes: [
                 {
                     id: 1,
@@ -180,6 +182,7 @@ export default {
             headline: "Für welchen Markt oder welche Zielgruppe ist das Produkt bestimmt?",
             image: Four,
             multipleChoice: true,
+            category: "market",
             boxes: [
                 {
                     id: 1,

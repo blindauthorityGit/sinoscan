@@ -4,16 +4,18 @@ import { IoCheckmarkSharp } from "react-icons/io5"; // Importing the checkmark i
 
 const Card = ({ length, headline, text, icon, id, isActive, onClick, answer }) => {
     let colSpanClass;
+    let smallCap = false;
 
     switch (true) {
         case length === 4:
-            colSpanClass = "col-span-3";
+            colSpanClass = "col-span-6 lg:col-span-3";
             break;
         case length > 4:
-            colSpanClass = "col-span-3";
+            colSpanClass = "col-span-4 lg:col-span-3";
+            smallCap = true;
             break;
         default:
-            colSpanClass = "col-span-3"; // Default fallback if length is not 4 or greater than 4
+            colSpanClass = "col-span-6 lg:col-span-3"; // Default fallback if length is not 4 or greater than 4
             break;
     }
 
@@ -57,8 +59,8 @@ const Card = ({ length, headline, text, icon, id, isActive, onClick, answer }) =
     return (
         <motion.div
             className={`${colSpanClass} ${
-                length > 4 ? "h-48" : "h-72"
-            } p-4 font-sans text-primary rounded-lg bg-white flex flex-col justify-around items-center shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out`}
+                length > 4 ? "lg:h-48" : "h-40 lg:h-72"
+            } p-2 lg:p-4 font-sans text-primary rounded-lg bg-white flex flex-col justify-around items-center shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out`}
             whileHover={hoverAnimation}
             initial={initialStyle}
             animate={isActive ? activeStyle : inactiveStyle}
@@ -77,9 +79,16 @@ const Card = ({ length, headline, text, icon, id, isActive, onClick, answer }) =
                     <IoCheckmarkSharp className="text-white text-xl" />
                 </motion.div>
             )}
-            <img src={icon.src} alt="" className="w-16 h-16" style={isActive ? activeIconStyle : null} />
-            <h3 className="font-semibold text-xl hyphens-auto text-center">{headline}</h3>
-            {length > 4 ? null : <p className="text-sm text-center">{text}</p>}
+            <img
+                src={icon.src}
+                alt=""
+                className={`${smallCap ? "!h-10 !w-10" : null} w-16 h-16`}
+                style={isActive ? activeIconStyle : null}
+            />
+            <h3 className={`${smallCap ? "!text-xs" : null} font-semibold text-sm lg:text-xl hyphens-auto text-center`}>
+                {headline}
+            </h3>
+            {length > 4 ? null : <p className="text-sm hidden lg:block text-center">{text}</p>}
         </motion.div>
     );
 };

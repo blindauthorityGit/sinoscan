@@ -11,6 +11,32 @@ const useStore = create((set) => ({
     resetActiveIds: () => set({ activeIds: {} }),
     resetTextValue: () => set({ textValue: "" }), // Reset text input when needed
 
+    selectedServices: [],
+    setSelectedServices: (services) => set({ selectedServices: services }),
+
+    selectedStages: [],
+    setSelectedStages: (stages) => set({ selectedStages: stages }),
+
+    selectedRequirements: [],
+    setSelectedRequirements: (requirements) => set({ selectedRequirements: requirements }),
+
+    selectedMarket: [],
+    setSelectedMarket: (market) => set({ selectedMarket: market }),
+
+    projectDescription: "",
+    setProjectDescription: (description) => set({ projectDescription: description }),
+
+    // Ensure all selections are reset properly
+    resetAll: () =>
+        set({
+            selectedServices: [],
+            selectedStages: [],
+            selectedRequirements: [],
+            selectedMarket: [],
+            projectDescription: "",
+            // other resets...
+        }),
+
     budgetOption: "",
     setBudgetOption: (option) => set({ budgetOption: option }),
     timeframeOption: "",

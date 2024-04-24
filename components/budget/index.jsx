@@ -89,7 +89,7 @@ const OptionsComponent = () => {
                     ))}
                 </div>
             </div>
-            <div className="options-component col-span-6 order-1">
+            <div className="options-component col-span-12 lg:col-span-6 lg:order-1">
                 <div className="radio-options bg-white p-4">
                     <p className="font-sans text-primary text-sm mb-4">Bis wann benötigen Sie das fertige Design?</p>
 
@@ -114,7 +114,7 @@ const OptionsComponent = () => {
                     ))}
                 </div>
             </div>
-            <div className="options-component col-span-6 order-0">
+            <div className="options-component col-span-12 lg:col-span-6 lg:order-0">
                 <div className="radio-options bg-white p-4">
                     <p className="font-sans text-primary text-sm mb-4">
                         Haben Sie spezifische Meilensteine oder Deadlines, die wir berücksichtigen sollten?

@@ -11,7 +11,7 @@ import Eight from "../assets/8.jpg";
 
 import Produktdesign from "../assets/icons/produktdesign.svg";
 import TechnischeGetaltung from "../assets/icons/technischeGestaltung.svg";
-import Produktionsmanagement from "../assets/icons/produktionsManagement.svg";
+import Produktionsmanagement from "../assets/icons/produktionsmanagement.svg";
 import Logistik from "../assets/icons/logistik.svg";
 
 import Idee from "../assets/icons/idee.svg";

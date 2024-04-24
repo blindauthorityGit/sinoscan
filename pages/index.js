@@ -223,7 +223,7 @@ export default function Home() {
 
     return (
         <MainContainer width="container mx-auto pt-4 font-sans">
-            <div className="col-span-12 px-4 lg:px-0 lg:col-span-8 pr-8 pt-2">
+            <div className="col-span-12 px-4 lg:pl-0 lg:col-span-8 pr-8 pt-2">
                 <div className="topBar flex justify-between">
                     <img src={Logo.src} alt="" />
                     <div className="text-right text-xs lg:text-base font-sans font-semibold underline">

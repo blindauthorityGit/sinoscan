@@ -16,8 +16,11 @@ const MyDropzone = () => {
                 path: file.path,
                 size: file.size,
                 type: file.type,
+                file: file,
             }));
+            console.log(newFiles);
 
+            // Then handle file size accumulation and setting files as you already do
             const newSize = totalFileSize + newFiles.reduce((acc, file) => acc + file.size, 0);
             if (newSize <= maxSize) {
                 addFiles(newFiles);
@@ -26,6 +29,7 @@ const MyDropzone = () => {
                 setErrors((prev) => [...prev, "Total file size limit exceeded."]);
             }
 
+            // Handle file rejections
             fileRejections.forEach(({ file, errors }) => {
                 errors.forEach((error) => {
                     console.error(`Error: ${file.name} ${error.message}`);

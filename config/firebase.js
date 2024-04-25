@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, doc, setDoc, addDoc } from "firebase/firestore/lite";
-import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytes, uploadBytesResumable, listAll, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_FIREBASE,
@@ -44,6 +44,20 @@ export const uploadFiles = async (files) => {
     console.log(fileLinks);
     return fileLinks; // Array of file URLs
 };
+// export const uploadFiles = async (files) => {
+//     const storage = getStorage();
+//     const fileLinks = [];
+
+//     for (const file of files) {
+//         const fileRef = ref(storage, `uploads/${file.name}`);
+//         const snapshot = await uploadBytesResumable(fileRef, file);
+//         const fileUrl = await getDownloadURL(snapshot.ref);
+//         fileLinks.push(fileUrl);
+//     }
+
+//     console.log(fileLinks);
+//     return fileLinks; // Array of file URLs
+// };
 
 export const saveToFirestore = async (userData) => {
     try {

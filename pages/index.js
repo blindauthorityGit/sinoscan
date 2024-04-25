@@ -315,6 +315,14 @@ export default function Home() {
                         )}
                     </div>
                 )}
+                <button
+                    className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-1 font-semibold bg-green text-white"
+                    onClick={handleSubmit}
+                    disabled={!termsAgreed}
+                    style={termsAgreed ? { opacity: "1" } : { opacity: "0.3" }}
+                >
+                    Absenden
+                </button>
             </div>
             <div className="hidden lg:block lg:col-span-4">
                 <motion.img

@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-import { saveToFirestore } from "../../config/firebase";
+import { saveToFirestore, uploadFiles } from "../../config/firebase";
 
 export default async function handler(req, res) {
     console.log(req.body);
@@ -8,7 +8,15 @@ export default async function handler(req, res) {
         try {
             // Save to Firestore
 
+            const files = req.body.files.map((file) => {
+                // Assuming file.content is a base64-encoded string
+                const buffer = Buffer.from(file.content, "base64");
+                return new File([buffer], file.name, { type: file.type });
+            });
+            console.log(files);
+
             saveToFirestore(req.body);
+            // uploadFiles()
 
             // Set up Nodemailer
             const transporter = nodemailer.createTransport({

@@ -42,7 +42,7 @@ export default async function handler(req, res) {
                 html: `
                 <p>Sehr geehrte/r ${req.body.personalInfo.name},</p>
                 <p>vielen Dank für Ihre Anfrage!</p>
-                <p>Ein Mitarbeiter von uns wird sich in Kürze mit Ihnen in Verbindung stellen.</p>
+                <p>Ein Mitarbeiter von uns wird sich in Kürze mit Ihnen in Verbindung setzen.</p>
                 <p>Mit freundlichen Grüßen</p>
                 <p>Sinoscan GmbH</p>
             `,

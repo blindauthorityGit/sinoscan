@@ -86,6 +86,7 @@ const Card = ({ length, headline, text, icon, id, isActive, onClick, answer }) =
                 style={isActive ? activeIconStyle : null}
             />
             <h3
+                lang="de"
                 className={`${
                     smallCap ? "!text-xs lg:!text-lg" : null
                 } font-semibold text-sm lg:text-xl hyphens-auto text-center`}

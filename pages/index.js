@@ -257,7 +257,7 @@ export default function Home() {
                     </h2>
                     <p className="mt-3 lg:mt-6 text-sm">{config.steps[currentStep].subline}</p>
                 </div>
-                <div className="bg-lightGray p-4 lg:p-8 grid grid-cols-12 gap-4 mt-8">
+                <div className="bg-lightGray p-3 lg:p-8 grid grid-cols-12 gap-2 lg:gap-4 mt-8">
                     {renderComponent(currentStepConfig, activeIds, handleCardClick)}
                 </div>
                 {loading ? (

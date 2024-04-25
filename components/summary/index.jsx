@@ -17,6 +17,7 @@ const SummaryComponent = () => {
         selectedMarket,
         setTermsAgreed,
         termsAgreed,
+        fileUrls,
     } = useStore((state) => ({
         personalInfo: state.personalInfo,
         budgetOption: state.budgetOption,
@@ -31,6 +32,7 @@ const SummaryComponent = () => {
         selectedMarket: state.selectedMarket,
         setTermsAgreed: state.setTermsAgreed,
         termsAgreed: state.termsAgreed,
+        fileUrls: state.fileUrls,
     }));
 
     const [newsletterSubscribed, setNewsletterSubscribed] = useState(true);
@@ -103,13 +105,17 @@ const SummaryComponent = () => {
                     <ul>
                         {files.map((file, index) => (
                             <li key={index}>
-                                {file.path} - {Math.round(file.size / 1024 / 1024)} MB
+                                {file.path} - {Math.round((file.size / 1024 / 1024) * 100) / 100} MB
                             </li>
                         ))}
+                        {/* {fileUrls.map((file, index) => (
+                            <li key={index + 5}>{file}</li>
+                        ))} */}
                     </ul>
-                    <p>
-                        <strong>Gesamte Dateigröße:</strong> {Math.round(totalFileSize / 1024 / 1024)} MB
-                    </p>
+                    {/* <p>
+                        <strong>Gesamte Dateigröße:</strong>{" "}
+                        {Math.round((totalFileSize.size / 1024 / 1024) * 100) / 100} MB
+                    </p> */}
                 </div>
             </div>
             <div className="col-span-12 mt-0">

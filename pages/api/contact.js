@@ -8,13 +8,6 @@ export default async function handler(req, res) {
         try {
             // Save to Firestore
 
-            const files = req.body.files.map((file) => {
-                // Assuming file.content is a base64-encoded string
-                const buffer = Buffer.from(file.content, "base64");
-                return new File([buffer], file.name, { type: file.type });
-            });
-            console.log(files);
-
             saveToFirestore(req.body);
             // uploadFiles()
 
@@ -81,15 +74,9 @@ export default async function handler(req, res) {
             
                     <h2>Hochgeladene Dateien</h2>
                     <p>Total Upload Size: ${(req.body.totalFileSize / 1024 / 1024).toFixed(2)} MB</p>
-                    <ul>
-                        ${req.body.files
-                            .map(
-                                (file) => `
-                            <li>${file.path} - ${(file.size / 1024 / 1024).toFixed(2)} MB</li>
-                        `
-                            )
-                            .join("")}
+                    <ul>${req.body.fileUrls.map((url) => `<li><a href="${url}">${url}</a></li>`).join("")}
                     </ul>
+        
                 `,
             };
 
@@ -106,4 +93,16 @@ export default async function handler(req, res) {
         res.setHeader("Allow", ["POST"]);
         res.status(405).end(`Method ${req.method} Not Allowed`);
     }
+}
+
+{
+    /* <ul>
+${req.body.files
+    .map(
+        (file) => `
+    <li>${file.path} - ${(file.size / 1024 / 1024).toFixed(2)} MB</li>
+`
+    )
+    .join("")}
+</ul> */
 }

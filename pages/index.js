@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 import useStore from "../store/store"; // Import the store
+import { uploadFilesToTempStorage } from "../config/firebase";
 
 import Card from "../components/cards";
 import { motion } from "framer-motion";
@@ -52,6 +53,8 @@ export default function Home() {
         selectedRequirements,
         selectedMarket,
         termsAgreed,
+        addFileUrls,
+        fileUrls,
     } = useStore();
     const nextButtonEnabled = isNextButtonEnabled(
         currentStep,
@@ -99,34 +102,31 @@ export default function Home() {
     // SUBMIT DATA
 
     const handleSubmit = async () => {
-        const formData = new FormData();
+        const data = {
+            personalInfo,
+            budgetOption,
+            timeframeOption,
+            textAreaValue,
+            projectDescription: textValue,
+            totalFileSize,
+            selectedServices,
+            selectedStages,
+            selectedRequirements,
+            selectedMarket,
+            fileUrls, // Assuming fileUrls are already formatted as needed
+        };
 
-        // Append other data as strings
-        formData.append("personalInfo", JSON.stringify(personalInfo));
-        formData.append("budgetOption", budgetOption);
-        formData.append("timeframeOption", timeframeOption);
-        formData.append("textAreaValue", textAreaValue);
-        formData.append("projectDescription", textValue);
-        formData.append("totalFileSize", totalFileSize.toString());
-        formData.append("selectedServices", JSON.stringify(selectedServices));
-        formData.append("selectedStages", JSON.stringify(selectedStages));
-        formData.append("selectedRequirements", JSON.stringify(selectedRequirements));
-        formData.append("selectedMarket", JSON.stringify(selectedMarket));
-
-        // Append files
-        files.forEach((file, index) => {
-            console.log(file);
-            formData.append(`file${index}`, file.file, file.path);
-        });
-
-        console.log(formData);
+        console.log(data);
 
         setLoading(true);
 
         try {
             const response = await fetch("/api/contact", {
                 method: "POST",
-                body: formData, // Send formData without Content-Type header
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
             });
 
             setLoading(false);
@@ -134,17 +134,14 @@ export default function Home() {
             if (response.ok) {
                 console.log("Form submitted successfully");
                 setSubmissionStatus("success");
-                // Handle success here (e.g., update UI to show a success message)
             } else {
                 console.log("Form submission failed");
                 setSubmissionStatus("failed");
-                // Handle failure here (e.g., update UI to show an error message)
             }
         } catch (error) {
             console.error("Error submitting form:", error);
             setLoading(false);
             setSubmissionStatus("failed");
-            // Handle network errors here (e.g., update UI to show an error message)
         }
     };
 
@@ -190,10 +187,43 @@ export default function Home() {
         }
     };
 
-    const goToNextStep = () => {
-        if (currentStep < config.steps.length - 1) {
-            setCurrentStep(currentStep + 1);
-            setActiveIds([]); // Reset selections when moving to the next step
+    const goToNextStep = async () => {
+        console.log(files);
+        if (config.steps[currentStep].component === "dropzone") {
+            // Assuming `dropzoneStepIndex` is the index of your Dropzone step
+            if (files.length > 0) {
+                setLoading(true);
+                try {
+                    // Trigger file upload to temporary storage
+                    const tempFileUrls = await uploadFilesToTempStorage(files);
+                    console.log("Files uploaded to temporary storage:", tempFileUrls);
+                    addFileUrls(tempFileUrls);
+                    // Optionally, store these URLs in state or context if needed later
+                    setLoading(false);
+                    // Move to next step only if upload is successful
+                    if (currentStep < config.steps.length - 1) {
+                        setCurrentStep(currentStep + 1);
+                        scrollTo(0, 0);
+                    }
+                } catch (error) {
+                    console.error("Failed to upload files:", error);
+                    setLoading(false);
+                    // Optionally handle the UI feedback for upload failure
+                }
+            } else {
+                // No files to upload, proceed to the next step
+                if (currentStep < config.steps.length - 1) {
+                    console.log("NO FILES ADDED");
+                    setCurrentStep(currentStep + 1);
+                    scrollTo(0, 0);
+                }
+            }
+        } else {
+            // Not the Dropzone step, just move to the next step
+            if (currentStep < config.steps.length - 1) {
+                setCurrentStep(currentStep + 1);
+                scrollTo(0, 0);
+            }
         }
     };
 
@@ -224,7 +254,7 @@ export default function Home() {
 
     return (
         <MainContainer width="container mx-auto pt-4 font-sans">
-            <div className="col-span-12 px-4 lg:pl-0 lg:col-span-8 pr-8 pt-2">
+            <div className="col-span-12 px-4 lg:pl-0 lg:col-span-8 lg:pr-8 pt-2">
                 <div className="topBar flex justify-between">
                     <img className="w-2/4 lg:w-auto" src={Logo.src} alt="" />
                     <div className="text-right text-xs lg:text-base font-sans font-semibold underline">
@@ -262,7 +292,7 @@ export default function Home() {
                 </div>
                 {loading ? (
                     <div className="flex justify-center">
-                        <Rings height="80" width="80" color="#df3288" radius="6" visible={true} />
+                        <Rings height="80" width="80" color="#002a3a" radius="6" visible={true} />
                     </div>
                 ) : submissionStatus === "success" ? (
                     <p className="!text-green mt-4  mb-12">
@@ -296,7 +326,8 @@ export default function Home() {
                             <button
                                 className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-1 font-semibold"
                                 onClick={() => {
-                                    setCurrentStep(currentStep + 1), scrollTo(0, 0);
+                                    // setCurrentStep(currentStep + 1), scrollTo(0, 0);
+                                    goToNextStep();
                                 }}
                                 style={
                                     nextButtonEnabled
@@ -315,14 +346,14 @@ export default function Home() {
                         )}
                     </div>
                 )}
-                <button
+                {/* <button
                     className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-1 font-semibold bg-green text-white"
                     onClick={handleSubmit}
                     disabled={!termsAgreed}
                     style={termsAgreed ? { opacity: "1" } : { opacity: "0.3" }}
                 >
                     Absenden
-                </button>
+                </button> */}
             </div>
             <div className="hidden lg:block lg:col-span-4">
                 <motion.img

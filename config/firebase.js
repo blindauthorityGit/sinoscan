@@ -1,6 +1,15 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, doc, setDoc, addDoc } from "firebase/firestore/lite";
-import { getStorage, ref, uploadBytes, uploadBytesResumable, listAll, getDownloadURL } from "firebase/storage";
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    uploadBytesResumable,
+    listAll,
+    getDownloadURL,
+    copyObject,
+    deleteObject,
+} from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_FIREBASE,
@@ -44,6 +53,46 @@ export const uploadFiles = async (files) => {
     console.log(fileLinks);
     return fileLinks; // Array of file URLs
 };
+
+export const uploadFilesToTempStorage = async (files) => {
+    const storageRef = getStorage(); // Make sure this is correctly initialized and accessible here
+    const uploadTasks = files.map((file) => {
+        console.log("Uploading file:", file.path, file.size, file.type); // Confirm file properties are correct
+
+        const timestamp = new Date().getTime();
+        const fileRef = ref(storageRef, `temp/${timestamp}_${file.path}`); // Ensure file.name is used correctly
+
+        return uploadBytes(fileRef, file.file) // Use the actual File object
+            .then(() => getDownloadURL(fileRef))
+            .then((downloadURL) => {
+                console.log(`File uploaded: ${downloadURL}`);
+                return downloadURL;
+            })
+            .catch((error) => {
+                console.error("Upload error:", error);
+                throw error; // Rethrow or handle as needed
+            });
+    });
+    return Promise.all(uploadTasks);
+};
+
+export const moveFileToPermanentStorage = async (tempFilePath, permanentFilePath) => {
+    const storageRef = ref(storage);
+    const tempFileRef = ref(storageRef, tempFilePath);
+    const permanentFileRef = ref(storageRef, permanentFilePath);
+
+    try {
+        // Copy the file to the new location
+        await copyObject(tempFileRef, permanentFileRef);
+
+        // Delete the temporary file
+        await deleteObject(tempFileRef);
+        console.log("File moved successfully!");
+    } catch (error) {
+        console.error("Error moving file:", error);
+    }
+};
+
 // export const uploadFiles = async (files) => {
 //     const storage = getStorage();
 //     const fileLinks = [];

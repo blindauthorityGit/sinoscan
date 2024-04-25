@@ -114,6 +114,21 @@ const useStore = create((set) => ({
             return { files: updatedFiles, totalFileSize: updatedSize };
         }),
     resetFiles: () => set({ files: [], totalFileSize: 0 }),
+
+    fileUrls: [], // This will store the URLs of the uploaded files
+
+    addFileUrls: (urls) =>
+        set((state) => ({
+            fileUrls: [...state.fileUrls, ...urls],
+        })),
+
+    clearFileUrls: () => set({ fileUrls: [] }),
+
+    // Optionally, you might want to remove a specific URL if a file is deleted or replaced
+    removeFileUrl: (urlToRemove) =>
+        set((state) => ({
+            fileUrls: state.fileUrls.filter((url) => url !== urlToRemove),
+        })),
 }));
 
 export default useStore;

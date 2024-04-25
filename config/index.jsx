@@ -121,7 +121,7 @@ export default {
             boxes: [
                 {
                     id: 1,
-                    headline: "Benutzerfreundlichkeit",
+                    headline: "Benutzer-<br/>freundlichkeit",
                     // text: "Nur eine grundlegende Idee oder Konzept",
                     icon: Benutzerfreundlichkeit,
                     selected: false,
@@ -142,7 +142,7 @@ export default {
                 },
                 {
                     id: 4,
-                    headline: "Kostenoptimierung",
+                    headline: "Kosten-<br/>optimierung",
                     // text: "Ein physischer oder funktionaler Prototyp wurde bereits entwickelt",
                     icon: Kosten,
                     selected: false,
@@ -200,7 +200,7 @@ export default {
                 },
                 {
                     id: 3,
-                    headline: "Spezialisierte Branche",
+                    headline: "Spezialisierte<br/> Branche",
                     text: "oder Nische",
                     icon: Nische,
                     selected: false,

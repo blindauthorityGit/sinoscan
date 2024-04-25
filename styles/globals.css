@@ -17,6 +17,24 @@
 }
 
 body {
+    /* Specifies the primary language for hyphenation rules */
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+
+    /* Assists the browser in language-specific hyphenation */
+    lang: de; /* Change 'en' to your target language if different */
+
+    /* Encourages breaking at appropriate hyphenation points */
+    word-wrap: break-word;
+
+    /* Optional: Sets a minimum number of characters before a hyphenation point */
+    -webkit-hyphenate-limit-before: 3;
+    -webkit-hyphenate-limit-after: 3;
+    -webkit-hyphenate-limit-chars: auto 6;
+
+
 
 }
 

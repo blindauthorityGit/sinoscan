@@ -99,31 +99,34 @@ export default function Home() {
     // SUBMIT DATA
 
     const handleSubmit = async () => {
-        const formData = {
-            personalInfo,
-            budgetOption,
-            timeframeOption,
-            textAreaValue,
-            projectDescription: textValue, // Assuming textValue is the project description.
-            files,
-            totalFileSize,
-            selectedServices,
-            selectedStages,
-            selectedRequirements,
-            selectedMarket,
-        };
+        const formData = new FormData();
+
+        // Append other data as strings
+        formData.append("personalInfo", JSON.stringify(personalInfo));
+        formData.append("budgetOption", budgetOption);
+        formData.append("timeframeOption", timeframeOption);
+        formData.append("textAreaValue", textAreaValue);
+        formData.append("projectDescription", textValue);
+        formData.append("totalFileSize", totalFileSize.toString());
+        formData.append("selectedServices", JSON.stringify(selectedServices));
+        formData.append("selectedStages", JSON.stringify(selectedStages));
+        formData.append("selectedRequirements", JSON.stringify(selectedRequirements));
+        formData.append("selectedMarket", JSON.stringify(selectedMarket));
+
+        // Append files
+        files.forEach((file, index) => {
+            console.log(file);
+            formData.append(`file${index}`, file.file, file.path);
+        });
 
         console.log(formData);
-        console.log(JSON.stringify(formData));
+
         setLoading(true);
 
         try {
             const response = await fetch("/api/contact", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
+                body: formData, // Send formData without Content-Type header
             });
 
             setLoading(false);
@@ -131,12 +134,10 @@ export default function Home() {
             if (response.ok) {
                 console.log("Form submitted successfully");
                 setSubmissionStatus("success");
-
                 // Handle success here (e.g., update UI to show a success message)
             } else {
                 console.log("Form submission failed");
                 setSubmissionStatus("failed");
-
                 // Handle failure here (e.g., update UI to show an error message)
             }
         } catch (error) {
@@ -145,7 +146,6 @@ export default function Home() {
             setSubmissionStatus("failed");
             // Handle network errors here (e.g., update UI to show an error message)
         }
-        // Here you could trigger your data submission logic or transition to a thank you page, etc.
     };
 
     const handleTextChange = (event) => {

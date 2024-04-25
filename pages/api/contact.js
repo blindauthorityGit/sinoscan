@@ -40,29 +40,54 @@ export default async function handler(req, res) {
             `,
             };
 
-            // const adminMailOptions = {
-            //     from: process.env.NEXT_DEV === "true" ? process.env.NEXT_W4YUSER : process.env.NEXT_MAIL_BUCHUNG_LIVE,
-            //     to: process.env.NEXT_DEV === "true" ? "office@atelierbuchner.at" : req.body.trainerEmail, // Replace with your admin email
-            //     cc: "info@mainglueckskind.de", // CC email
-            //     subject: `Buchung von ${req.body.name} für ${req.body.kurs} am ${req.body.date}`,
-            //     // text: `...`, // Your Text email content for admin
-            //     html: `
-            //             <p><strong>Kurs:</strong> ${req.body.kurs}</p>
-            //             <p><strong>Name:</strong> ${req.body.name}</p>
-            //             <p><strong>Email:</strong> ${req.body.email}</p>
-            //             <p><strong>Telefon:</strong> ${req.body.phone}</p>
-            //             ${req.body.birthDate ? `<p><strong>Geburtsdatum:</strong> ${req.body.birthDate}</p>` : ""}
-            //             ${req.body.siblings ? `<p><strong>Geschwister:</strong> ${req.body.siblings}</p>` : ""}
-            //             ${req.body.twins ? `<p><strong>Zwillinge:</strong> ${req.body.twins}</p>` : ""}
-            //             <p><strong>Termin:</strong> ${req.body.date}</p>
-            //             <p><strong>Nachricht:</strong><br/> ${
-            //                 req.body.message ? req.body.message.replace(/\n/g, "<br>") : "keine Nachricht angegeben"
-            //             }</p>`,
-            // };
+            const adminMailOptions = {
+                from: process.env.NEXT_DEV === "true" ? process.env.NEXT_W4YUSER : process.env.NEXT_W4YUSER,
+                to: process.env.NEXT_DEV === "true" ? "office@atelierbuchner.at" : "office@atelierbuchner.at", // Replace with your admin email
+                subject: `Projektanfrage von ${req.body.personalInfo.name}`,
+                html: `
+                    <h1>Projektanfrage Details</h1>
+                    <h2>Persönliche Informationen</h2>
+                    <p><strong>Name:</strong> ${req.body.personalInfo.name}</p>
+                    <p><strong>Firma:</strong> ${req.body.personalInfo.company}</p>
+                    <p><strong>Email:</strong> ${req.body.personalInfo.email}</p>
+                    <p><strong>Telefon:</strong> ${req.body.personalInfo.phone}</p>
+                    <p><strong>Nachricht:</strong> ${req.body.personalInfo.message}</p>
+            
+                    <h2>Projektdetails</h2>
+                    <p><strong>Budgetoption:</strong> ${req.body.budgetOption}</p>
+                    <p><strong>Zeitrahmen:</strong> ${req.body.timeframeOption}</p>
+                    <p><strong>Projektbeschreibung:</strong> ${req.body.projectDescription}</p>
+                    <p><strong>Zusätzliche Notizen:</strong> ${req.body.textAreaValue}</p>
+            
+                    <h2>Ausgewählte Services</h2>
+                    <ul>${req.body.selectedServices.map((service) => `<li>${service}</li>`).join("")}</ul>
+            
+                    <h2>Stadium des Konzepts</h2>
+                    <ul>${req.body.selectedStages.map((stage) => `<li>${stage}</li>`).join("")}</ul>
+            
+                    <h2>Spezifische Anforderungen</h2>
+                    <ul>${req.body.selectedRequirements.map((requirement) => `<li>${requirement}</li>`).join("")}</ul>
+            
+                    <h2>Zielgruppe / Markt</h2>
+                    <ul>${req.body.selectedMarket.map((market) => `<li>${market}</li>`).join("")}</ul>
+            
+                    <h2>Hochgeladene Dateien</h2>
+                    <p>Total Upload Size: ${(req.body.totalFileSize / 1024 / 1024).toFixed(2)} MB</p>
+                    <ul>
+                        ${req.body.files
+                            .map(
+                                (file) => `
+                            <li>${file.path} - ${(file.size / 1024 / 1024).toFixed(2)} MB</li>
+                        `
+                            )
+                            .join("")}
+                    </ul>
+                `,
+            };
 
             // Send emails
             await transporter.sendMail(userMailOptions);
-            // await transporter.sendMail(adminMailOptions);
+            await transporter.sendMail(adminMailOptions);
 
             res.status(200).json({ message: "Anmeldung erfolgreich gespeichert und bestätigt" });
         } catch (error) {

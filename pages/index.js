@@ -24,7 +24,7 @@ import Summary from "../components/summary";
 export default function Home() {
     const [currentStep, setCurrentStep] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [submissionStatus, setSubmissionStatus] = useState("");
+    const [submissionStatus, setSubmissionStatus] = useState("d");
     const currentStepConfig = config.steps[currentStep];
     const isLastStep = currentStep === config.steps.length - 1;
 
@@ -51,6 +51,7 @@ export default function Home() {
         selectedStages,
         selectedRequirements,
         selectedMarket,
+        termsAgreed,
     } = useStore();
     const nextButtonEnabled = isNextButtonEnabled(
         currentStep,
@@ -232,7 +233,7 @@ export default function Home() {
                         <a href="mailto:info@sinoscan.de">info@sinoscan.de</a>
                     </div>
                 </div>
-                <div className="stepCounter mt-8 lg:mt-16">
+                <div className="stepCounter mt-6 lg:mt-16">
                     <div className="flex">
                         {config.steps.map((e, i) => {
                             return (
@@ -240,20 +241,21 @@ export default function Home() {
                                     className={`${i == currentStep ? "!bg-green" : " bg-mediumGray"} ${
                                         i < currentStep ? "bg-primaryColor" : "bg-mediumGray"
                                     } step  w-16 h-2 mr-2 lg:mr-4`}
+                                    onClick={() => (i < currentStep ? setCurrentStep(i) : null)}
                                     key={`stepNr${i}`}
                                 ></div>
                             );
                         })}
                     </div>
-                    <p className="mt-2">
-                        {currentStep + 1} / {config.steps.length}
+                    <p className="mt-2 text-xs">
+                        Schritt {currentStep + 1} / {config.steps.length}
                     </p>
                 </div>
                 <div className="text mt-6 lg:mt-12 text-primaryColor">
-                    <h2 className="font-sans font-semibold text-2xl lg:text-5xl">
+                    <h2 className="font-sans font-semibold text-xl lg:text-5xl">
                         {config.steps[currentStep].headline}
                     </h2>
-                    <p className="mt-6 text-sm">{config.steps[currentStep].subline}</p>
+                    <p className="mt-3 lg:mt-6 text-sm">{config.steps[currentStep].subline}</p>
                 </div>
                 <div className="bg-lightGray p-4 lg:p-8 grid grid-cols-12 gap-4 mt-8">
                     {renderComponent(currentStepConfig, activeIds, handleCardClick)}
@@ -274,22 +276,28 @@ export default function Home() {
                     <div className="flex flex-wrap mt-8 mb-12">
                         <button
                             className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-primaryColor text-primaryColor font-semibold mr-2 sm:mr-4 bg-transparent"
-                            onClick={() => setCurrentStep(currentStep - 1)}
+                            onClick={() => {
+                                setCurrentStep(currentStep - 1), scrollTo(0, 0);
+                            }}
                             disabled={!isEnabledBack}
                         >
                             zurück
                         </button>
                         {isLastStep ? (
                             <button
-                                className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-1 font-semibold bg-primaryColor text-white"
+                                className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-1 font-semibold bg-green text-white"
                                 onClick={handleSubmit}
+                                disabled={!termsAgreed}
+                                style={termsAgreed ? { opacity: "1" } : { opacity: "0.3" }}
                             >
                                 Absenden
                             </button>
                         ) : (
                             <button
                                 className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-1 font-semibold"
-                                onClick={() => setCurrentStep(currentStep + 1)}
+                                onClick={() => {
+                                    setCurrentStep(currentStep + 1), scrollTo(0, 0);
+                                }}
                                 style={
                                     nextButtonEnabled
                                         ? { backgroundColor: "#002a3a", color: "white", opacity: 1, cursor: "pointer" }

@@ -15,6 +15,8 @@ const SummaryComponent = () => {
         selectedStages,
         selectedRequirements,
         selectedMarket,
+        setTermsAgreed,
+        termsAgreed,
     } = useStore((state) => ({
         personalInfo: state.personalInfo,
         budgetOption: state.budgetOption,
@@ -27,10 +29,12 @@ const SummaryComponent = () => {
         selectedStages: state.selectedStages,
         selectedRequirements: state.selectedRequirements,
         selectedMarket: state.selectedMarket,
+        setTermsAgreed: state.setTermsAgreed,
+        termsAgreed: state.termsAgreed,
     }));
 
     const [newsletterSubscribed, setNewsletterSubscribed] = useState(true);
-    const [termsAgreed, setTermsAgreed] = useState(false);
+    // const [termsAgreed, setTermsAgreed] = useState(false);
 
     return (
         <>
@@ -56,7 +60,8 @@ const SummaryComponent = () => {
                         <strong>Zeitrahmen:</strong> {timeframeOption || "Keine Angabe"}
                     </p>
                     <p className="mt-3 hyphens-auto">
-                        <strong>Projektbeschreibung:</strong> {textValue || "Keine Angabe"}
+                        <strong>Projektbeschreibung:</strong>
+                        <p> {textValue || "Keine Angabe"}</p>
                     </p>
                     {/* <p>
                     <strong>Zeitrahmen:</strong> {timeframeOption || "Keine Angabe"}
@@ -67,7 +72,9 @@ const SummaryComponent = () => {
                     <h3 className=" font-semibold text-gray-700">Ausgewählte Services:</h3>
                     <ul>
                         {selectedServices.map((service) => (
-                            <li key={service}>{service}</li>
+                            <li className="text-sm" key={service}>
+                                {service}
+                            </li>
                         ))}
                     </ul>
                     <h3 className=" font-semibold text-gray-700">Stadium des Konzepts:</h3>
@@ -77,7 +84,7 @@ const SummaryComponent = () => {
                         ))}
                     </ul>
                     <h3 className=" font-semibold text-gray-700">Spezifische Anforderungen:</h3>
-                    <ul>
+                    <ul className="list-disc list-inside	">
                         {selectedRequirements.map((requirement) => (
                             <li key={requirement}>{requirement}</li>
                         ))}
@@ -108,23 +115,32 @@ const SummaryComponent = () => {
             <div className="col-span-12 mt-0">
                 <div className="flex items-center mb-4">
                     <input
+                        id="newsletterCheckbox" // Unique ID for the checkbox
                         type="checkbox"
                         checked={newsletterSubscribed}
                         onChange={() => setNewsletterSubscribed(!newsletterSubscribed)}
                         className="mr-2 h-4 w-4"
                     />
-                    <label className="text-sm text-gray-700">
+                    <label htmlFor="newsletterCheckbox" className="text-sm text-gray-700 flex-1">
                         Sie werden für unseren Newsletter angemeldet, um Updates zu erhalten.
                     </label>
                 </div>
+
                 <div className="flex items-center">
+                    {" "}
                     <input
                         type="checkbox"
+                        id="agb"
                         checked={termsAgreed}
                         onChange={() => setTermsAgreed(!termsAgreed)}
                         className="mr-2 h-4 w-4"
                     />
-                    <label className="text-sm text-gray-700">Ich stimme den Allgemeinen Geschäftsbedingungen zu.</label>
+                    <label
+                        htmlFor="agb" // Unique ID for the checkbox
+                        className="text-sm text-gray-700"
+                    >
+                        Ich stimme den Allgemeinen Geschäftsbedingungen zu.
+                    </label>
                 </div>
             </div>
         </>

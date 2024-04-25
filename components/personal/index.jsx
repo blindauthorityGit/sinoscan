@@ -29,7 +29,7 @@ const Personal = () => {
                             id={field.name}
                             value={personalInfo[field.name]}
                             onChange={handleChange}
-                            className="flex-1 shadow w-full lg:w-auto appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="flex-1 bg-lightGray w-full placeholder-transparent sm:placeholder-gray-500 lg:w-auto appearance-none  rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder={field.placeholder}
                         />
                     ) : (
@@ -38,7 +38,7 @@ const Personal = () => {
                             id={field.name}
                             value={personalInfo[field.name]}
                             onChange={handleChange}
-                            className="flex-1 shadow w-full lg:w-auto appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="flex-1 bg-lightGray w-full placeholder-transparent sm:placeholder-gray-500 lg:w-auto appearance-none  rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder={field.placeholder}
                             rows="4"
                         />

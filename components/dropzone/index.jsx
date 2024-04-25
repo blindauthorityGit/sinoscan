@@ -60,7 +60,7 @@ const MyDropzone = () => {
             <div
                 {...getRootProps()}
                 className="w-full h-56 flex items-center justify-center"
-                style={{ border: "2px dashed #007bff", padding: "20px", textAlign: "center" }}
+                style={{ border: "1px dashed #002a3a", padding: "20px", textAlign: "center" }}
             >
                 <input {...getInputProps()} />
                 {isDragActive ? (

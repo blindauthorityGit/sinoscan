@@ -27,7 +27,6 @@ const OptionsComponent = () => {
         paddingLeft: "35px",
         marginBottom: "12px",
         cursor: "pointer",
-        fontSize: "22px",
         userSelect: "none",
     };
 
@@ -71,7 +70,7 @@ const OptionsComponent = () => {
                     {["Unter 5.000 €", "5.000 € - 10.000 €", "10.000 € - 20.000 €", "Über 20.000 €"].map((option) => (
                         <label
                             key={option}
-                            className="inline-block relative pl-8 mb-3 cursor-pointer text-lg mr-6 select-none"
+                            className="inline-block text-sm relative pl-8 mb-3 cursor-pointer lg:text-lg mr-6 select-none"
                         >
                             <input
                                 type="radio"
@@ -79,9 +78,9 @@ const OptionsComponent = () => {
                                 value={option}
                                 checked={budgetOption === option}
                                 onChange={handleBudgetChange}
-                                className="absolute opacity-0 cursor-pointer h-0 w-0"
+                                className="absolute opacity-0 text-sm cursor-pointer h-0 w-0"
                             />
-                            <span className="absolute top-0 left-0 h-6 w-6 bg-gray-200 rounded-full">
+                            <span className="absolute top-0  left-0 h-6 w-6 bg-gray-200 rounded-full">
                                 {budgetOption === option && <span style={checkmarkInnerStyle} />}
                             </span>
                             {option}
@@ -96,7 +95,7 @@ const OptionsComponent = () => {
                     {["1 - 3 Monate", "3 - 6 Monate", "flexibel"].map((option) => (
                         <label
                             key={option}
-                            className="inline-block relative pl-8 mb-3 cursor-pointer text-lg mr-6 select-none"
+                            className="block lg:inline-block relative pl-8 mb-3 cursor-pointer text-sm lg:text-lg mr-6 select-none"
                         >
                             <input
                                 type="radio"

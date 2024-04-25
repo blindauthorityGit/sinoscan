@@ -59,7 +59,7 @@ const Card = ({ length, headline, text, icon, id, isActive, onClick, answer }) =
     return (
         <motion.div
             className={`${colSpanClass} ${
-                length > 4 ? "lg:h-48" : "h-40 lg:h-72"
+                length > 4 ? "lg:h-48" : "h-32 lg:h-72"
             } p-2 lg:p-4 font-sans text-primary rounded-lg bg-white flex flex-col justify-around items-center shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out`}
             whileHover={hoverAnimation}
             initial={initialStyle}
@@ -82,7 +82,7 @@ const Card = ({ length, headline, text, icon, id, isActive, onClick, answer }) =
             <img
                 src={icon.src}
                 alt=""
-                className={`${smallCap ? "!h-10 !w-10" : null} w-16 h-16`}
+                className={`${smallCap ? "!h-10 !w-10" : null} h-12 w-12 lg:w-16 lg:h-16`}
                 style={isActive ? activeIconStyle : null}
             />
             <h3 className={`${smallCap ? "!text-xs" : null} font-semibold text-sm lg:text-xl hyphens-auto text-center`}>

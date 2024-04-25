@@ -226,7 +226,7 @@ export default function Home() {
         <MainContainer width="container mx-auto pt-4 font-sans">
             <div className="col-span-12 px-4 lg:pl-0 lg:col-span-8 pr-8 pt-2">
                 <div className="topBar flex justify-between">
-                    <img src={Logo.src} alt="" />
+                    <img className="w-2/4 lg:w-auto" src={Logo.src} alt="" />
                     <div className="text-right text-xs lg:text-base font-sans font-semibold underline">
                         <a href="tel:+4961038055685">+49 (0) 6103 805 56 85</a>
                         <br />

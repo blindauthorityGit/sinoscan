@@ -82,15 +82,20 @@ const Card = ({ length, headline, text, icon, id, isActive, onClick, answer }) =
             <img
                 src={icon.src}
                 alt=""
-                className={`${smallCap ? "!h-10 !w-10" : null} h-12 w-12 lg:w-16 lg:h-16`}
+                className={`${smallCap ? "!h-10 !w-10 lg:!w-16 lg:!h-16" : null} h-12 w-12 lg:w-16 lg:h-16`}
                 style={isActive ? activeIconStyle : null}
             />
-            <h3 className={`${smallCap ? "!text-xs" : null} font-semibold text-sm lg:text-xl hyphens-auto text-center`}>
-                {headline}
-            </h3>
+            <h3
+                className={`${
+                    smallCap ? "!text-xs lg:!text-lg" : null
+                } font-semibold text-sm lg:text-xl hyphens-auto text-center`}
+                dangerouslySetInnerHTML={{ __html: headline }}
+            ></h3>
             {length > 4 ? null : <p className="text-sm hidden lg:block text-center">{text}</p>}
         </motion.div>
     );
 };
 
 export default Card;
+
+// dangerouslySetInnerHTML={{ __html: yourObject.headline }}

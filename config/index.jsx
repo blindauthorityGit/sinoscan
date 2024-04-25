@@ -59,7 +59,7 @@ export default {
                 },
                 {
                     id: 3,
-                    headline: "ProduktionsManagement",
+                    headline: "Produktions&shy;Management",
                     text: "Überwachung und Management der Herstellungsprozesse",
                     icon: Produktionsmanagement,
                     selected: false,

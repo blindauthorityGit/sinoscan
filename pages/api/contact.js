@@ -1,15 +1,48 @@
 import nodemailer from "nodemailer";
+import axios from "axios";
 
 import { saveToFirestore, uploadFiles } from "../../config/firebase";
 
+async function subscribeToNewsletter(email, firstName, lastName) {
+    const data = {
+        email_address: email,
+        status: "subscribed",
+        // merge_fields: {
+        //     FNAME: firstName,
+        //     LNAME: lastName,
+        // },
+    };
+
+    try {
+        const response = await axios.post(
+            `https://${process.env.NEXT_SERVER_PREFIX}.api.mailchimp.com/3.0/lists/${process.env.NEXT_LIST_ID}/members/`,
+            data,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.NEXT_MAILCHIMP_API}`,
+                },
+            }
+        );
+        console.log("DREINNEN", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Mailchimp Error:", error.response.data);
+        throw new Error("Failed to subscribe to newsletter.");
+    }
+}
+
 export default async function handler(req, res) {
-    console.log(req.body);
+    console.log(req.body, req.body.personalInfo.email, req.body.personalInfo.firstName, req.body.personalInfo.lastName);
     if (req.method === "POST") {
         try {
             // Save to Firestore
 
             saveToFirestore(req.body);
             // uploadFiles()
+            if (req.body.newsletterSubscribed) {
+                await subscribeToNewsletter(req.body.personalInfo.email);
+            }
 
             // Set up Nodemailer
             const transporter = nodemailer.createTransport({

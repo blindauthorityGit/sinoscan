@@ -26,9 +26,11 @@ const useStore = create((set) => ({
     projectDescription: "",
     setProjectDescription: (description) => set({ projectDescription: description }),
 
+    newsletterSubscribed: true,
+    setNewsletterSubscribed: (agreed) => set({ newsletterSubscribed: agreed }),
+
     termsAgreed: false,
     setTermsAgreed: (agreed) => set({ termsAgreed: agreed }),
-
     // Ensure all selections are reset properly
     resetAll: () =>
         set({

@@ -21,6 +21,9 @@ import MyDropzone from "../components/dropzone";
 import Budget from "../components/budget";
 import Personal from "../components/personal";
 import Summary from "../components/summary";
+import Modal from "../components/modal";
+import Impressum from "../components/modal/impressum";
+import Datenschutz from "../components/modal/datenschutz";
 
 export default function Home() {
     const [currentStep, setCurrentStep] = useState(0);
@@ -28,6 +31,9 @@ export default function Home() {
     const [submissionStatus, setSubmissionStatus] = useState("d");
     const currentStepConfig = config.steps[currentStep];
     const isLastStep = currentStep === config.steps.length - 1;
+
+    const [showImpressum, setShowImpressum] = useState(false);
+    const [showDatenschutz, setShowDatenschutz] = useState(false);
 
     // const [textValue, setTextValue] = useState(""); // Initialize the state
 
@@ -55,6 +61,7 @@ export default function Home() {
         termsAgreed,
         addFileUrls,
         fileUrls,
+        newsletterSubscribed,
     } = useStore();
     const nextButtonEnabled = isNextButtonEnabled(
         currentStep,
@@ -113,6 +120,7 @@ export default function Home() {
             selectedStages,
             selectedRequirements,
             selectedMarket,
+            newsletterSubscribed,
             fileUrls, // Assuming fileUrls are already formatted as needed
         };
 
@@ -253,7 +261,7 @@ export default function Home() {
     const isEnabledBack = currentStep !== 0; // this should be dynamic based on your state or props
 
     return (
-        <MainContainer width="container mx-auto pt-4 font-sans">
+        <MainContainer width="container mx-auto pt-4 font-sans ">
             <div className="col-span-12 px-4 lg:pl-0 lg:col-span-8 lg:pr-8 pt-2">
                 <div className="topBar flex justify-between">
                     <img className="w-2/4 lg:w-auto" src={Logo.src} alt="" />
@@ -354,6 +362,32 @@ export default function Home() {
                 >
                     Absenden
                 </button> */}
+
+                <div className="footer text-primaryColor flex justify-between mt-16 mb-12 text-xs lg:mt-36 lg:text-sm font-semibold ">
+                    <div className="left">
+                        <div onClick={() => setShowImpressum(true)} className="block underline">
+                            Impressum
+                        </div>
+                        <Modal isOpen={showImpressum} close={() => setShowImpressum(false)}>
+                            <Impressum></Impressum>{" "}
+                        </Modal>
+                        <div onClick={() => setShowDatenschutz(true)} className="block underline">
+                            Datenschutzerklärung
+                        </div>
+                        <Modal isOpen={showDatenschutz} close={() => setShowDatenschutz(false)}>
+                            <Datenschutz></Datenschutz>{" "}
+                        </Modal>
+                    </div>
+                    <div className="right">
+                        <p>
+                            Otto-Hahn-Str. 36
+                            <br />
+                            63303 Dreieich
+                            <br />
+                            Germany
+                        </p>
+                    </div>
+                </div>
             </div>
             <div className="hidden lg:block lg:col-span-4">
                 <motion.img

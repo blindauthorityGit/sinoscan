@@ -18,6 +18,8 @@ const SummaryComponent = () => {
         setTermsAgreed,
         termsAgreed,
         fileUrls,
+        newsletterSubscribed,
+        setNewsletterSubscribed,
     } = useStore((state) => ({
         personalInfo: state.personalInfo,
         budgetOption: state.budgetOption,
@@ -33,9 +35,11 @@ const SummaryComponent = () => {
         setTermsAgreed: state.setTermsAgreed,
         termsAgreed: state.termsAgreed,
         fileUrls: state.fileUrls,
+        newsletterSubscribed: state.newsletterSubscribed,
+        setNewsletterSubscribed: state.setNewsletterSubscribed,
     }));
 
-    const [newsletterSubscribed, setNewsletterSubscribed] = useState(true);
+    // const [newsletterSubscribed, setNewsletterSubscribed] = useState(true);
     // const [termsAgreed, setTermsAgreed] = useState(false);
 
     return (

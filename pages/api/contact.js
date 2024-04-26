@@ -59,19 +59,21 @@ export default async function handler(req, res) {
 
             const userMailOptions = {
                 from: "office@atelierbuchner.at",
-                // from: "info@mainglueckskind.de",
                 to: req.body.personalInfo.email,
                 subject: "Anfrage Bestätigung",
-                // text: `Sehr geehrte/r ${req.body.personalInfo.name}, vielen Dank für Deine Reservierung in unserem Cafe am ${new Date(
-                //     req.body.date
-                // ).toLocaleDateString("de-DE")} um ${req.body.timeSlot}! Wir freuen uns auf dich! Main Glückskind`,
                 html: `
-                <p>Sehr geehrte/r ${req.body.personalInfo.name},</p>
-                <p>vielen Dank für Ihre Anfrage!</p>
-                <p>Ein Mitarbeiter von uns wird sich in Kürze mit Ihnen in Verbindung setzen.</p>
-                <p>Mit freundlichen Grüßen</p>
-                <p>Sinoscan GmbH</p>
-            `,
+                    <p>Sehr geehrte/r ${req.body.personalInfo.name},</p>
+                    <p>vielen Dank für Ihre Anfrage!</p>
+                    <p>Ein Mitarbeiter von uns wird sich in Kürze mit Ihnen in Verbindung setzen.</p>
+              
+                    <br>
+                    <p>Viele Grüße / Best Regards,</p>
+                    <p><strong>Tanja</strong></p>
+                    <p><strong>SinoScan | Deutschland</strong></p>
+                    <p>SinoScan Design | Engineering | Manufacturing</p>
+                    <img src="https://sinoscan.vercel.app/logo.jpg" style="width: 100px; height: auto;"/>
+                    <p><strong>TEL</strong> +49 6103 8055685 | <strong>MOBIL</strong> +49 176 31144326 | <strong>MAIL</strong> tanja.behnisch@sinoscan.com | <strong>WEB</strong> www.sinoscan.de</p>
+                `,
             };
 
             const adminMailOptions = {

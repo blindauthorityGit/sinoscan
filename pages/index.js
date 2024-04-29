@@ -365,13 +365,19 @@ export default function Home() {
 
                 <div className="footer text-primaryColor flex justify-between mt-16 mb-12 text-xs lg:mt-36 lg:text-sm font-semibold ">
                     <div className="left">
-                        <div onClick={() => setShowImpressum(true)} className="block underline">
+                        <div
+                            onClick={() => setShowImpressum(true)}
+                            className="block underline cursor-pointer hover:opacity-70"
+                        >
                             Impressum
                         </div>
                         <Modal isOpen={showImpressum} close={() => setShowImpressum(false)}>
                             <Impressum></Impressum>{" "}
                         </Modal>
-                        <div onClick={() => setShowDatenschutz(true)} className="block underline">
+                        <div
+                            onClick={() => setShowDatenschutz(true)}
+                            className="block underline cursor-pointer hover:opacity-70"
+                        >
                             Datenschutzerklärung
                         </div>
                         <Modal isOpen={showDatenschutz} close={() => setShowDatenschutz(false)}>

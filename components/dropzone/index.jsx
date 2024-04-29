@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { FaFilePdf, FaImage, FaFileWord, FaFileAlt, FaTrashAlt } from "react-icons/fa";
+import { FaFilePdf, FaImage, FaFileWord, FaFileAlt, FaTrashAlt, FaFile } from "react-icons/fa";
 import useStore from "../../store/store"; // Import the store
 import Cloud from "../../assets/icons/cloud.svg";
 
@@ -46,8 +46,8 @@ const MyDropzone = () => {
         accept: {
             "image/jpeg": [],
             "image/png": [],
+            "image/tiff": [],
             "application/pdf": [],
-            "application/msword": [],
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [],
         },
     });
@@ -55,6 +55,7 @@ const MyDropzone = () => {
     const fileIcon = (type) => {
         if (type.includes("pdf")) return <FaFilePdf />;
         if (type.includes("jpeg") || type.includes("png")) return <FaImage />;
+        if (type.includes("tiff")) return <FaFile />;
         if (type.includes("msword") || type.includes("wordprocessingml")) return <FaFileWord />;
         return <FaFileAlt />;
     };

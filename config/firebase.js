@@ -93,20 +93,35 @@ export const moveFileToPermanentStorage = async (tempFilePath, permanentFilePath
     }
 };
 
-// export const uploadFiles = async (files) => {
-//     const storage = getStorage();
-//     const fileLinks = [];
+// Function to move file from temporary to permanent storage
+export const moveToPermanentStorage = async (tempFileUrls) => {
+    const storageRef = getStorage();
+    const moves = tempFileUrls.map(async (url) => {
+        const tempRef = ref(storageRef, url); // Create reference to temp file
+        const permanentPath = `permanent/${url.split("/").pop()}`; // Generate permanent path
+        const permanentRef = ref(storageRef, permanentPath); // Create reference to permanent file
 
-//     for (const file of files) {
-//         const fileRef = ref(storage, `uploads/${file.name}`);
-//         const snapshot = await uploadBytesResumable(fileRef, file);
-//         const fileUrl = await getDownloadURL(snapshot.ref);
-//         fileLinks.push(fileUrl);
-//     }
+        try {
+            // Copy file from temp to permanent location
+            // Simulate the copy operation since Firebase does not support direct copy
+            const blob = await fetch(url).then((res) => res.blob()); // Download the file as a blob
+            await uploadBytes(permanentRef, blob); // Upload the blob to the permanent location
+            console.log(`File moved to: ${permanentPath}`);
 
-//     console.log(fileLinks);
-//     return fileLinks; // Array of file URLs
-// };
+            // Delete the temporary file
+            await deleteObject(tempRef);
+            console.log(`Temp file deleted: ${url}`);
+
+            // Return the download URL of the moved file
+            return await getDownloadURL(permanentRef);
+        } catch (error) {
+            console.error("Error moving or deleting file:", error);
+            throw error; // Rethrow or handle as needed
+        }
+    });
+
+    return Promise.all(moves);
+};
 
 export const saveToFirestore = async (userData) => {
     try {

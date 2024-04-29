@@ -1,16 +1,23 @@
 import nodemailer from "nodemailer";
 import axios from "axios";
 
-import { saveToFirestore, uploadFiles } from "../../config/firebase";
+import { saveToFirestore, uploadFile, moveToPermanentStorage } from "../../config/firebase";
 
-async function subscribeToNewsletter(email, firstName, lastName) {
+async function subscribeToNewsletter(email, name, phone, company, service, stadium, anforderungen, zielgruppe) {
     const data = {
         email_address: email,
         status: "subscribed",
-        // merge_fields: {
-        //     FNAME: firstName,
-        //     LNAME: lastName,
-        // },
+        // Uncomment and complete merge_fields if you want to use them
+        merge_fields: {
+            FNAME: name.split(" ")[0],
+            LNAME: name.split(" ")[1],
+            PHONE: phone,
+            COMPANY: company,
+            SERVICE: service,
+            STADIUM: stadium,
+            REQS: anforderungen.join(", "),
+            ZIELGRUPPE: zielgruppe.join(", "),
+        },
     };
 
     try {
@@ -24,11 +31,22 @@ async function subscribeToNewsletter(email, firstName, lastName) {
                 },
             }
         );
-        console.log("DREINNEN", response.data);
+        console.log("Subscription successful", response.data);
         return response.data;
     } catch (error) {
-        console.error("Mailchimp Error:", error.response.data);
-        throw new Error("Failed to subscribe to newsletter.");
+        if (error.response && error.response.data) {
+            const errorData = error.response.data;
+            // Mailchimp error code for already existing subscriber is 'Member Exists'
+            if (errorData.title === "Member Exists") {
+                console.log("Subscriber already exists, no action taken.");
+                return { status: "already_subscribed", detail: errorData.detail };
+            } else {
+                console.error("Mailchimp Error:", errorData.detail);
+                throw new Error("Failed to subscribe to newsletter: " + errorData.detail);
+            }
+        } else {
+            throw new Error("Failed to connect to Mailchimp.");
+        }
     }
 }
 
@@ -37,28 +55,45 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
         try {
             // Save to Firestore
+            // const { fileUrls } = req.body;
+
+            // if (fileUrls && fileUrls.length > 0) {
+            //     const permanentUrls = await moveToPermanentStorage(fileUrls);
+            //     console.log("Files moved to permanent storage:", permanentUrls);
+            //     // Optionally add permanent URLs to Firestore or send in the email
+            // }
 
             saveToFirestore(req.body);
             // uploadFiles()
             if (req.body.newsletterSubscribed) {
-                await subscribeToNewsletter(req.body.personalInfo.email);
+                await subscribeToNewsletter(
+                    req.body.personalInfo.email,
+                    req.body.personalInfo.name,
+                    req.body.personalInfo.phone,
+                    req.body.personalInfo.company,
+                    req.body.selectedServices[0],
+                    req.body.selectedStages[0],
+                    req.body.selectedRequirements,
+                    req.body.selectedMarket
+                );
             }
 
             // Set up Nodemailer
             const transporter = nodemailer.createTransport({
-                host: process.env.NEXT_DEV === "true" ? "smtp.world4you.com" : "smtp.world4you.com",
+                host: process.env.NEXT_DEV === "true" ? "smtp.world4you.com" : "smtp.office365.com",
                 port: 587,
                 secure: false,
                 auth: {
-                    user:
-                        process.env.NEXT_DEV === "true" ? process.env.NEXT_W4YUSER : process.env.NEXT_MAIL_BUCHUNG_LIVE,
+                    user: process.env.NEXT_DEV === "true" ? process.env.NEXT_W4YUSER : process.env.NEXT_SINOSCAN_EMAIL,
                     pass:
-                        process.env.NEXT_DEV === "true" ? process.env.NEXT_W4YPASSWORD : process.env.NEXT_MAIL_PW_LIVE,
+                        process.env.NEXT_DEV === "true"
+                            ? process.env.NEXT_W4YPASSWORD
+                            : process.env.NEXT_SINOSCAN_EMAIL_PASSWORD,
                 },
             });
 
             const userMailOptions = {
-                from: "office@atelierbuchner.at",
+                from: process.env.NEXT_DEV === "true" ? "office@atelierbuchner.at" : process.env.NEXT_SINOSCAN_EMAIL,
                 to: req.body.personalInfo.email,
                 subject: "Anfrage Bestätigung",
                 html: `
@@ -77,8 +112,8 @@ export default async function handler(req, res) {
             };
 
             const adminMailOptions = {
-                from: process.env.NEXT_DEV === "true" ? process.env.NEXT_W4YUSER : process.env.NEXT_W4YUSER,
-                to: process.env.NEXT_DEV === "true" ? "contact@sabocon.com" : "office@atelierbuchner.at", // Replace with your admin email
+                from: process.env.NEXT_DEV === "true" ? process.env.NEXT_W4YUSER : process.env.NEXT_SINOSCAN_EMAIL,
+                to: process.env.NEXT_DEV === "true" ? "office@atelierbuchner.at" : "office@atelierbuchner.at", // Replace with your admin email
                 subject: `Projektanfrage von ${req.body.personalInfo.name}`,
                 html: `
                     <h1>Projektanfrage Details</h1>

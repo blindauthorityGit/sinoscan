@@ -79,7 +79,10 @@ const SummaryComponent = () => {
                     <ul>
                         {selectedServices.map((service) => (
                             <li className="text-sm" key={service}>
-                                {service}
+                                {service
+                                    .split(" ")
+                                    .filter((e) => e !== "<br/>")
+                                    .join(" ")}
                             </li>
                         ))}
                     </ul>
@@ -92,7 +95,7 @@ const SummaryComponent = () => {
                     <h3 className=" font-semibold text-gray-700">Spezifische Anforderungen:</h3>
                     <ul className="list-disc list-inside	">
                         {selectedRequirements.map((requirement) => (
-                            <li key={requirement}>{requirement}</li>
+                            <li key={requirement} dangerouslySetInnerHTML={{ __html: requirement }}></li>
                         ))}
                     </ul>
                     <h3 className=" font-semibold text-gray-700">Zielgruppe / Markt:</h3>

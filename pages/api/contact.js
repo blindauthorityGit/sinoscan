@@ -113,7 +113,7 @@ export default async function handler(req, res) {
 
             const adminMailOptions = {
                 from: process.env.NEXT_DEV === "true" ? process.env.NEXT_W4YUSER : process.env.NEXT_SINOSCAN_EMAIL,
-                to: process.env.NEXT_DEV === "true" ? "office@atelierbuchner.at" : "office@atelierbuchner.at", // Replace with your admin email
+                to: process.env.NEXT_DEV === "true" ? "office@atelierbuchner.at" : "contact@sabocon.com", // Replace with your admin email
                 subject: `Projektanfrage von ${req.body.personalInfo.name}`,
                 html: `
                     <h1>Projektanfrage Details</h1>

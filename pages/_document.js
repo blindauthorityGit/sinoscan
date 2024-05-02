@@ -4,12 +4,25 @@ export default function Document() {
     return (
         <Html lang="de">
             <Head />
+            {/* Google Analytics Script */}
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-FG4STTVFTY"></script>
+            <script
+                dangerouslySetInnerHTML={{
+                    __html: `
+                            window.dataLayer = window.dataLayer || [];
+                            function gtag(){dataLayer.push(arguments);}
+                            gtag('js', new Date());
+                            gtag('config', 'G-FG4STTVFTY');
+                        `,
+                }}
+            />
+            {/* End Google Analytics Script */}
             <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
             <link
                 href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
                 rel="stylesheet"
-            ></link>
+            />
             <body>
                 <Main />
                 <NextScript />

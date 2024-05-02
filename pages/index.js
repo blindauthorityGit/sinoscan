@@ -25,6 +25,9 @@ import Modal from "../components/modal";
 import Impressum from "../components/modal/impressum";
 import Datenschutz from "../components/modal/datenschutz";
 
+//SEO
+import Meta from "../components/SEO";
+
 export default function Home() {
     const [currentStep, setCurrentStep] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -142,6 +145,14 @@ export default function Home() {
             if (response.ok) {
                 console.log("Form submitted successfully");
                 setSubmissionStatus("success");
+
+                if (window.gtag) {
+                    window.gtag("event", "landingpage_inquiry", {
+                        event_category: "Form Submission",
+                        event_label: "Landing Page Inquiry",
+                        value: 1,
+                    });
+                }
             } else {
                 console.log("Form submission failed");
                 setSubmissionStatus("failed");
@@ -261,100 +272,107 @@ export default function Home() {
     const isEnabledBack = currentStep !== 0; // this should be dynamic based on your state or props
 
     return (
-        <MainContainer width="container mx-auto pt-4 font-sans ">
-            <div className="col-span-12 px-4 lg:pl-0 lg:col-span-8 lg:pr-8 pt-2">
-                <div className="topBar flex justify-between">
-                    <img className="w-2/4 lg:w-auto" src={Logo.src} alt="" />
-                    <div className="text-right text-xs lg:text-base font-sans font-semibold underline">
-                        <a href="tel:+4961038055685">+49 (0) 6103 805 56 85</a>
-                        <br />
-                        <a href="mailto:info@sinoscan.de">info@sinoscan.de</a>
+        <>
+            <Meta></Meta>
+            <MainContainer width="container mx-auto pt-4 font-sans ">
+                <div className="col-span-12 px-4 lg:pl-0 lg:col-span-8 lg:pr-8 pt-2">
+                    <div className="topBar flex justify-between">
+                        <img className="w-2/4 lg:w-auto" src={Logo.src} alt="" />
+                        <div className="text-right text-xs lg:text-base font-sans font-semibold underline">
+                            <a href="tel:+4961038055685">+49 (0) 6103 805 56 85</a>
+                            <br />
+                            <a href="mailto:info@sinoscan.de">info@sinoscan.de</a>
+                        </div>
                     </div>
-                </div>
-                <div className="stepCounter mt-6 lg:mt-16">
-                    <div className="flex">
-                        {config.steps.map((e, i) => {
-                            return (
-                                <div
-                                    className={`${i == currentStep ? "!bg-green" : " bg-mediumGray"} ${
-                                        i < currentStep ? "bg-primaryColor" : "bg-mediumGray"
-                                    } step  w-16 h-2 mr-2 lg:mr-4`}
-                                    onClick={() => (i < currentStep ? setCurrentStep(i) : null)}
-                                    key={`stepNr${i}`}
-                                ></div>
-                            );
-                        })}
+                    <div className="stepCounter mt-6 lg:mt-16">
+                        <div className="flex">
+                            {config.steps.map((e, i) => {
+                                return (
+                                    <div
+                                        className={`${i == currentStep ? "!bg-green" : " bg-mediumGray"} ${
+                                            i < currentStep ? "bg-primaryColor" : "bg-mediumGray"
+                                        } step  w-16 h-2 mr-2 lg:mr-4`}
+                                        onClick={() => (i < currentStep ? setCurrentStep(i) : null)}
+                                        key={`stepNr${i}`}
+                                    ></div>
+                                );
+                            })}
+                        </div>
+                        <p className="mt-2 text-xs">
+                            Schritt {currentStep + 1} / {config.steps.length}
+                        </p>
                     </div>
-                    <p className="mt-2 text-xs">
-                        Schritt {currentStep + 1} / {config.steps.length}
-                    </p>
-                </div>
-                <div className="text mt-6 lg:mt-12 text-primaryColor">
-                    <h2 className="font-sans font-semibold text-xl lg:text-5xl">
-                        {config.steps[currentStep].headline}
-                    </h2>
-                    <p className="mt-3 lg:mt-6 text-sm">{config.steps[currentStep].subline}</p>
-                </div>
-                <div className="bg-lightGray p-3 lg:p-8 grid grid-cols-12 gap-2 lg:gap-4 mt-8">
-                    {renderComponent(currentStepConfig, activeIds, handleCardClick)}
-                </div>
-                {loading ? (
-                    <div className="flex justify-center">
-                        <Rings height="80" width="80" color="#002a3a" radius="6" visible={true} />
+                    <div className="text mt-6 lg:mt-12 text-primaryColor">
+                        <h2 className="font-sans font-semibold text-xl lg:text-5xl">
+                            {config.steps[currentStep].headline}
+                        </h2>
+                        <p className="mt-3 lg:mt-6 text-sm">{config.steps[currentStep].subline}</p>
                     </div>
-                ) : submissionStatus === "success" ? (
-                    <p className="!text-green mt-4  mb-12">
-                        Vielen Dank für Ihre Anfrage! <br /> Wir werden uns in Kürze bei Ihnen melden.
-                    </p>
-                ) : submissionStatus === "failed" ? (
-                    <p className="!text-red-500  mb-12">
-                        Fehler bei der Anmeldung. Bitte versuchen Sie es später erneut.
-                    </p>
-                ) : (
-                    <div className="flex flex-wrap mt-8 mb-12">
-                        <button
-                            className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-primaryColor text-primaryColor font-semibold mr-2 sm:mr-4 bg-transparent"
-                            onClick={() => {
-                                setCurrentStep(currentStep - 1), scrollTo(0, 0);
-                            }}
-                            disabled={!isEnabledBack}
-                        >
-                            zurück
-                        </button>
-                        {isLastStep ? (
+                    <div className="bg-lightGray p-3 lg:p-8 grid grid-cols-12 gap-2 lg:gap-4 mt-8">
+                        {renderComponent(currentStepConfig, activeIds, handleCardClick)}
+                    </div>
+                    {loading ? (
+                        <div className="flex justify-center">
+                            <Rings height="80" width="80" color="#002a3a" radius="6" visible={true} />
+                        </div>
+                    ) : submissionStatus === "success" ? (
+                        <p className="!text-green mt-4  mb-12">
+                            Vielen Dank für Ihre Anfrage! <br /> Wir werden uns in Kürze bei Ihnen melden.
+                        </p>
+                    ) : submissionStatus === "failed" ? (
+                        <p className="!text-red-500  mb-12">
+                            Fehler bei der Anmeldung. Bitte versuchen Sie es später erneut.
+                        </p>
+                    ) : (
+                        <div className="flex flex-wrap mt-8 mb-12">
                             <button
-                                className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-1 font-semibold bg-green text-white"
-                                onClick={handleSubmit}
-                                disabled={!termsAgreed}
-                                style={termsAgreed ? { opacity: "1" } : { opacity: "0.3" }}
-                            >
-                                Absenden
-                            </button>
-                        ) : (
-                            <button
-                                className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-1 font-semibold"
+                                className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-primaryColor text-primaryColor font-semibold mr-2 sm:mr-4 bg-transparent"
                                 onClick={() => {
-                                    // setCurrentStep(currentStep + 1), scrollTo(0, 0);
-                                    goToNextStep();
+                                    setCurrentStep(currentStep - 1), scrollTo(0, 0);
                                 }}
-                                style={
-                                    nextButtonEnabled
-                                        ? { backgroundColor: "#002a3a", color: "white", opacity: 1, cursor: "pointer" }
-                                        : {
-                                              backgroundColor: "#cccccc",
-                                              color: "white",
-                                              opacity: 0.5,
-                                              cursor: "not-allowed",
-                                          }
-                                }
-                                disabled={!nextButtonEnabled}
+                                disabled={!isEnabledBack}
                             >
-                                weiter
+                                zurück
                             </button>
-                        )}
-                    </div>
-                )}
-                {/* <button
+                            {isLastStep ? (
+                                <button
+                                    className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-1 font-semibold bg-green text-white"
+                                    onClick={handleSubmit}
+                                    disabled={!termsAgreed}
+                                    style={termsAgreed ? { opacity: "1" } : { opacity: "0.3" }}
+                                >
+                                    Absenden
+                                </button>
+                            ) : (
+                                <button
+                                    className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-1 font-semibold"
+                                    onClick={() => {
+                                        // setCurrentStep(currentStep + 1), scrollTo(0, 0);
+                                        goToNextStep();
+                                    }}
+                                    style={
+                                        nextButtonEnabled
+                                            ? {
+                                                  backgroundColor: "#002a3a",
+                                                  color: "white",
+                                                  opacity: 1,
+                                                  cursor: "pointer",
+                                              }
+                                            : {
+                                                  backgroundColor: "#cccccc",
+                                                  color: "white",
+                                                  opacity: 0.5,
+                                                  cursor: "not-allowed",
+                                              }
+                                    }
+                                    disabled={!nextButtonEnabled}
+                                >
+                                    weiter
+                                </button>
+                            )}
+                        </div>
+                    )}
+                    {/* <button
                     className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-1 font-semibold bg-green text-white"
                     onClick={handleSubmit}
                     disabled={!termsAgreed}
@@ -363,48 +381,49 @@ export default function Home() {
                     Absenden
                 </button> */}
 
-                <div className="footer text-primaryColor flex justify-between mt-16 mb-12 text-xs lg:mt-36 lg:text-sm font-semibold ">
-                    <div className="left">
-                        <div
-                            onClick={() => setShowImpressum(true)}
-                            className="block underline cursor-pointer hover:opacity-70"
-                        >
-                            Impressum
+                    <div className="footer text-primaryColor flex justify-between mt-16 mb-12 text-xs lg:mt-36 lg:text-sm font-semibold ">
+                        <div className="left">
+                            <div
+                                onClick={() => setShowImpressum(true)}
+                                className="block underline cursor-pointer hover:opacity-70"
+                            >
+                                Impressum
+                            </div>
+                            <Modal isOpen={showImpressum} close={() => setShowImpressum(false)}>
+                                <Impressum></Impressum>{" "}
+                            </Modal>
+                            <div
+                                onClick={() => setShowDatenschutz(true)}
+                                className="block underline cursor-pointer hover:opacity-70"
+                            >
+                                Datenschutzerklärung
+                            </div>
+                            <Modal isOpen={showDatenschutz} close={() => setShowDatenschutz(false)}>
+                                <Datenschutz></Datenschutz>{" "}
+                            </Modal>
                         </div>
-                        <Modal isOpen={showImpressum} close={() => setShowImpressum(false)}>
-                            <Impressum></Impressum>{" "}
-                        </Modal>
-                        <div
-                            onClick={() => setShowDatenschutz(true)}
-                            className="block underline cursor-pointer hover:opacity-70"
-                        >
-                            Datenschutzerklärung
+                        <div className="right">
+                            <p>
+                                Otto-Hahn-Str. 36
+                                <br />
+                                63303 Dreieich
+                                <br />
+                                Germany
+                            </p>
                         </div>
-                        <Modal isOpen={showDatenschutz} close={() => setShowDatenschutz(false)}>
-                            <Datenschutz></Datenschutz>{" "}
-                        </Modal>
-                    </div>
-                    <div className="right">
-                        <p>
-                            Otto-Hahn-Str. 36
-                            <br />
-                            63303 Dreieich
-                            <br />
-                            Germany
-                        </p>
                     </div>
                 </div>
-            </div>
-            <div className="hidden lg:block lg:col-span-4">
-                <motion.img
-                    key={config.steps[currentStep].image.src} // Key changes when image source changes
-                    src={config.steps[currentStep].image.src}
-                    alt=""
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
-                />
-            </div>
-        </MainContainer>
+                <div className="hidden lg:block lg:col-span-4">
+                    <motion.img
+                        key={config.steps[currentStep].image.src} // Key changes when image source changes
+                        src={config.steps[currentStep].image.src}
+                        alt=""
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8, ease: "easeInOut" }}
+                    />
+                </div>
+            </MainContainer>
+        </>
     );
 }

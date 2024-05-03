@@ -1,6 +1,8 @@
 // components/Meta.js
 import Head from "next/head";
 
+import OGImage from "../../assets/ogImage.jpg";
+
 const Meta = ({ data }) => {
     return (
         <Head>
@@ -47,10 +49,7 @@ const Meta = ({ data }) => {
                 content="Brauchen Sie Unterstützung bei der Produktentwicklung oder Produktion? Dann kontaktieren Sie uns und lassen Sie uns besprechen, wie wir Ihnen bei der Realisierung Ihres Produkts helfen können."
             />
             {/* Use ternary operator to check for ogImage existence */}
-            <meta
-                property="og:image"
-                content="https://sinoscan.de/wp-content/uploads/2024/01/SinoScan-map-_-2024-_-German.webp"
-            />
+            <meta property="og:image" content={OGImage.src} />
             {/* Twitter */}
             <meta property="twitter:card" content="summary_large_image" />
             {/* <meta property="twitter:url" content={url} /> */}

@@ -279,9 +279,9 @@ export default function Home() {
                     <div className="topBar flex justify-between">
                         <img className="w-2/4 lg:w-auto" src={Logo.src} alt="" />
                         <div className="text-right text-xs lg:text-base font-sans font-semibold underline">
-                            <a href="tel:+4961038055685">+49 (0) 6103 805 56 85</a>
+                            <a href="tel:+16306919546">+1 630-691-9546</a>
                             <br />
-                            <a href="mailto:info@sinoscan.de">info@sinoscan.de</a>
+                            <a href="mailto:malene.newman@sinoscan.com">malene.newman@sinoscan.com</a>
                         </div>
                     </div>
                     <div className="stepCounter mt-6 lg:mt-16">
@@ -299,7 +299,7 @@ export default function Home() {
                             })}
                         </div>
                         <p className="mt-2 text-xs">
-                            Schritt {currentStep + 1} / {config.steps.length}
+                            Step {currentStep + 1} / {config.steps.length}
                         </p>
                     </div>
                     <div className="text mt-6 lg:mt-12 text-primaryColor">
@@ -317,12 +317,10 @@ export default function Home() {
                         </div>
                     ) : submissionStatus === "success" ? (
                         <p className="!text-green mt-4  mb-12">
-                            Vielen Dank für Ihre Anfrage! <br /> Wir werden uns in Kürze bei Ihnen melden.
+                            Thank you for your inquiry! <br /> We will contact you soon.
                         </p>
                     ) : submissionStatus === "failed" ? (
-                        <p className="!text-red-500  mb-12">
-                            Fehler bei der Anmeldung. Bitte versuchen Sie es später erneut.
-                        </p>
+                        <p className="!text-red-500  mb-12">Error! Please try again later.</p>
                     ) : (
                         <div className="flex flex-wrap mt-8 mb-12">
                             <button
@@ -332,7 +330,7 @@ export default function Home() {
                                 }}
                                 disabled={!isEnabledBack}
                             >
-                                zurück
+                                back
                             </button>
                             {isLastStep ? (
                                 <button
@@ -341,7 +339,7 @@ export default function Home() {
                                     disabled={!termsAgreed}
                                     style={termsAgreed ? { opacity: "1" } : { opacity: "0.3" }}
                                 >
-                                    Absenden
+                                    Submit
                                 </button>
                             ) : (
                                 <button
@@ -367,7 +365,7 @@ export default function Home() {
                                     }
                                     disabled={!nextButtonEnabled}
                                 >
-                                    weiter
+                                    next
                                 </button>
                             )}
                         </div>
@@ -383,11 +381,11 @@ export default function Home() {
 
                     <div className="footer text-primaryColor flex justify-between mt-16 mb-12 text-xs lg:mt-36 lg:text-sm font-semibold ">
                         <div className="left">
-                            <div
+                            {/* <div
                                 onClick={() => setShowImpressum(true)}
                                 className="block underline cursor-pointer hover:opacity-70"
                             >
-                                Impressum
+                                Inprint
                             </div>
                             <Modal isOpen={showImpressum} close={() => setShowImpressum(false)}>
                                 <Impressum></Impressum>{" "}
@@ -396,19 +394,19 @@ export default function Home() {
                                 onClick={() => setShowDatenschutz(true)}
                                 className="block underline cursor-pointer hover:opacity-70"
                             >
-                                Datenschutzerklärung
+                                Privacy
                             </div>
                             <Modal isOpen={showDatenschutz} close={() => setShowDatenschutz(false)}>
                                 <Datenschutz></Datenschutz>{" "}
-                            </Modal>
+                            </Modal> */}
                         </div>
                         <div className="right">
                             <p>
-                                Otto-Hahn-Str. 36
+                                154 W. Park Ave. #1288
                                 <br />
-                                63303 Dreieich
+                                Elmhurst, IL 60126
                                 <br />
-                                Germany
+                                USA
                             </p>
                         </div>
                     </div>

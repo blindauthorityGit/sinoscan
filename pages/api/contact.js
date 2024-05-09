@@ -95,58 +95,56 @@ export default async function handler(req, res) {
             const userMailOptions = {
                 from: process.env.NEXT_DEV === "true" ? "office@atelierbuchner.at" : process.env.NEXT_SINOSCAN_EMAIL,
                 to: req.body.personalInfo.email,
-                subject: "Anfrage Bestätigung",
+                subject: "Request Confirmation",
                 html: `
-                    <p>Sehr geehrte/r ${req.body.personalInfo.name},</p>
-                    <p>vielen Dank für Ihre Anfrage!</p>
-                    <p>Ein Mitarbeiter von uns wird sich in Kürze mit Ihnen in Verbindung setzen.</p>
+                    <p>Dear ${req.body.personalInfo.name},</p>
+                    <p>Thank you for your request!</p>
+                    <p>One of our employees will get in touch with you shortly.</p>
               
                     <br>
-                    <p>Viele Grüße / Best Regards,</p>
-                    <p><strong>Tanja</strong></p>
-                    <p><strong>SinoScan | Deutschland</strong></p>
+                    <p>Best regards,</p>
+                    <p><strong>Malene Newman</strong></p>
+                    <p><strong>SinoScan | US</strong></p>
                     <p>SinoScan Design | Engineering | Manufacturing</p>
                     <img src="https://sinoscan.vercel.app/logo.jpg" style="width: 100px; height: auto;"/>
-                    <p><strong>TEL</strong> +49 6103 8055685 | <strong>MOBIL</strong> +49 176 31144326 | <strong>MAIL</strong> tanja.behnisch@sinoscan.com | <strong>WEB</strong> www.sinoscan.de</p>
+                    <p><strong>TEL</strong> +1 630-691-9546| <strong>MAIL</strong> malene.newman@sinoscan.com | <strong>WEB</strong> www.sinoscan.com</p>
                 `,
             };
 
             const adminMailOptions = {
                 from: process.env.NEXT_DEV === "true" ? process.env.NEXT_W4YUSER : process.env.NEXT_SINOSCAN_EMAIL,
-                to: process.env.NEXT_DEV === "true" ? "office@atelierbuchner.at" : "info@sinoscan.de", // Replace with your admin email
-                subject: `Projektanfrage von ${req.body.personalInfo.name}`,
+                to: process.env.NEXT_DEV === "true" ? "office@atelierbuchner.at" : "malene.newman@sinoscan.com", // Replace with your admin email
+                subject: `Project Inquiry from ${req.body.personalInfo.name}`,
                 html: `
-                    <h1>Projektanfrage Details</h1>
-                    <h2>Persönliche Informationen</h2>
+                    <h1>Project Inquiry Details</h1>
+                    <h2>Personal Information</h2>
                     <p><strong>Name:</strong> ${req.body.personalInfo.name}</p>
-                    <p><strong>Firma:</strong> ${req.body.personalInfo.company}</p>
+                    <p><strong>Company:</strong> ${req.body.personalInfo.company}</p>
                     <p><strong>Email:</strong> ${req.body.personalInfo.email}</p>
-                    <p><strong>Telefon:</strong> ${req.body.personalInfo.phone}</p>
-                    <p><strong>Nachricht:</strong> ${req.body.personalInfo.message}</p>
+                    <p><strong>Phone:</strong> ${req.body.personalInfo.phone}</p>
+                    <p><strong>Message:</strong> ${req.body.personalInfo.message}</p>
             
-                    <h2>Projektdetails</h2>
-                    <p><strong>Budgetoption:</strong> ${req.body.budgetOption}</p>
-                    <p><strong>Zeitrahmen:</strong> ${req.body.timeframeOption}</p>
-                    <p><strong>Projektbeschreibung:</strong> ${req.body.projectDescription}</p>
-                    <p><strong>Zusätzliche Notizen:</strong> ${req.body.textAreaValue}</p>
+                    <h2>Project Details</h2>
+                    <p><strong>Budget Option:</strong> ${req.body.budgetOption}</p>
+                    <p><strong>Timeframe:</strong> ${req.body.timeframeOption}</p>
+                    <p><strong>Project Description:</strong> ${req.body.projectDescription}</p>
+                    <p><strong>Additional Notes:</strong> ${req.body.textAreaValue}</p>
             
-                    <h2>Ausgewählte Services</h2>
+                    <h2>Selected Services</h2>
                     <ul>${req.body.selectedServices.map((service) => `<li>${service}</li>`).join("")}</ul>
             
-                    <h2>Stadium des Konzepts</h2>
+                    <h2>Concept Stage</h2>
                     <ul>${req.body.selectedStages.map((stage) => `<li>${stage}</li>`).join("")}</ul>
             
-                    <h2>Spezifische Anforderungen</h2>
+                    <h2>Specific Requirements</h2>
                     <ul>${req.body.selectedRequirements.map((requirement) => `<li>${requirement}</li>`).join("")}</ul>
             
-                    <h2>Zielgruppe / Markt</h2>
+                    <h2>Target Audience / Market</h2>
                     <ul>${req.body.selectedMarket.map((market) => `<li>${market}</li>`).join("")}</ul>
             
-                    <h2>Hochgeladene Dateien</h2>
+                    <h2>Uploaded Files</h2>
                     <p>Total Upload Size: ${(req.body.totalFileSize / 1024 / 1024).toFixed(2)} MB</p>
-                    <ul>${req.body.fileUrls.map((url) => `<li><a href="${url}">${url}</a></li>`).join("")}
-                    </ul>
-        
+                    <ul>${req.body.fileUrls.map((url) => `<li><a href="${url}">${url}</a></li>`).join("")}</ul>
                 `,
             };
 

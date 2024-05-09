@@ -6,7 +6,7 @@ import OGImage from "../../assets/ogImage.jpg";
 const Meta = ({ data }) => {
     return (
         <Head>
-            <title>Ihre Anfrage für Produktentwicklung und Produktion | SinoScan DE</title>
+            <title>Your request for product design and production | SinoScan US</title>
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <meta charSet="utf-8" />
 

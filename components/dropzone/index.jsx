@@ -64,20 +64,18 @@ const MyDropzone = () => {
         <div className="dropzone-container col-span-12 w-full">
             <div
                 {...getRootProps()}
-                className="w-full h-56 flex items-center justify-center"
+                className={`w-full h-56 flex items-center justify-center ${isDragActive ? "bg-gray-200" : null}`}
                 style={{ border: "1px dashed #002a3a", padding: "20px", textAlign: "center" }}
             >
                 <input {...getInputProps()} />
                 {isDragActive ? (
                     <div className="bubu">
-                        <img src={Cloud.src} alt="" /> <p>Dateien hier her ziehen ...</p>
+                        <img src={Cloud.src} alt="" /> <p>Drag data here ...</p>
                     </div>
                 ) : (
                     <div className="bubu flex flex-col justify-center items-center">
                         <img src={Cloud.src} alt="" />{" "}
-                        <p className="text-primaryColor mt-4">
-                            Daten per Drag n Drop hier herziehen, oder per Klick auswählen
-                        </p>
+                        <p className="text-primaryColor mt-4">Drag and drop data here or select it by clicking</p>
                     </div>
                 )}
             </div>

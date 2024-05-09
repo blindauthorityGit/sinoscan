@@ -12,11 +12,11 @@ const Personal = () => {
     return (
         <div className="personal-form bg-white p-4 rounded col-span-12">
             {[
-                { label: "Name", name: "name", type: "text", placeholder: "Ihr Name" },
-                { label: "Firma", name: "company", type: "text", placeholder: "Ihr Unternehmen" },
-                { label: "Email", name: "email", type: "email", placeholder: "Ihre E-Mail-Adresse" },
-                { label: "Telefon", name: "phone", type: "text", placeholder: "Ihre Telefonnummer" },
-                { label: "Nachricht", name: "message", type: "textarea", placeholder: "Ihre Nachricht" },
+                { label: "Name", name: "name", type: "text", placeholder: "Your name" },
+                { label: "Business", name: "company", type: "text", placeholder: "Your business" },
+                { label: "Email", name: "email", type: "email", placeholder: "Your email address" },
+                { label: "Telephone", name: "phone", type: "text", placeholder: "Your phone number " },
+                { label: "Message", name: "message", type: "textarea", placeholder: "your message" },
             ].map((field, index) => (
                 <div key={index} className="lg:flex items-center mb-4">
                     <label htmlFor={field.name} className="block text-gray-700 text-sm font-bold w-32">

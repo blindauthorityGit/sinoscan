@@ -45,7 +45,7 @@ export const uploadFiles = async (files) => {
     const fileLinks = [];
 
     for (const file of files) {
-        const fileRef = storageRef.child(`uploads/${file.name}`);
+        const fileRef = storageRef.child(`uploads_US/${file.name}`);
         await fileRef.put(file);
         const fileUrl = await fileRef.getDownloadURL();
         fileLinks.push(fileUrl);
@@ -60,7 +60,7 @@ export const uploadFilesToTempStorage = async (files) => {
         console.log("Uploading file:", file.path, file.size, file.type); // Confirm file properties are correct
 
         const timestamp = new Date().getTime();
-        const fileRef = ref(storageRef, `temp/${timestamp}_${file.path}`); // Ensure file.name is used correctly
+        const fileRef = ref(storageRef, `temp_US/${timestamp}_${file.path}`); // Ensure file.name is used correctly
 
         return uploadBytes(fileRef, file.file) // Use the actual File object
             .then(() => getDownloadURL(fileRef))
@@ -126,7 +126,7 @@ export const moveToPermanentStorage = async (tempFileUrls) => {
 export const saveToFirestore = async (userData) => {
     try {
         // Specify the collection name where you want to store the data
-        const collectionRef = collection(db, JSON.parse(process.env.NEXT_DEV) ? "dev_data" : "live_data");
+        const collectionRef = collection(db, JSON.parse(process.env.NEXT_DEV) ? "dev_data_US" : "live_data_US");
         console.log("LOG UISERDATA: ", userData);
         // Add the user data to the collection
         await addDoc(collectionRef, userData);

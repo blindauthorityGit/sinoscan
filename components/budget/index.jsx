@@ -63,11 +63,11 @@ const OptionsComponent = () => {
             <div className="options-component col-span-12">
                 <div className="radio-options bg-white p-4">
                     <p className="font-sans text-primary text-sm mb-4">
-                        Bitte geben Sie eine Budgetspanne an, die für Ihr Projekt vorgesehen ist.
-                        <br /> Dies hilft uns, eine Lösung zu finden, die Ihren finanziellen Möglichkeiten entspricht.
+                        Please provide a budget range for your project.
+                        <br /> This helps us find a solution that suits your financial possibilities.
                     </p>
 
-                    {["Unter 5.000 €", "5.000 € - 10.000 €", "10.000 € - 20.000 €", "Über 20.000 €"].map((option) => (
+                    {["Under 5.000 $", "5.000 $ - 10.000 $", "10.000 $ - 20.000 $", "Over 20.000 $"].map((option) => (
                         <label
                             key={option}
                             className="inline-block text-sm relative pl-8 mb-3 cursor-pointer lg:text-lg mr-6 select-none"
@@ -90,9 +90,9 @@ const OptionsComponent = () => {
             </div>
             <div className="options-component col-span-12 lg:col-span-6 lg:order-1">
                 <div className="radio-options bg-white p-4">
-                    <p className="font-sans text-primary text-sm mb-4">Bis wann benötigen Sie das fertige Design?</p>
+                    <p className="font-sans text-primary text-sm mb-4">By when do you need the finished design?</p>
 
-                    {["1 - 3 Monate", "3 - 6 Monate", "flexibel"].map((option) => (
+                    {["1-3 Months", "3-6 Months", "flexible"].map((option) => (
                         <label
                             key={option}
                             className="block lg:inline-block relative pl-8 mb-3 cursor-pointer text-sm lg:text-lg mr-6 select-none"
@@ -116,12 +116,12 @@ const OptionsComponent = () => {
             <div className="options-component col-span-12 lg:col-span-6 lg:order-0">
                 <div className="radio-options bg-white p-4">
                     <p className="font-sans text-primary text-sm mb-4">
-                        Haben Sie spezifische Meilensteine oder Deadlines, die wir berücksichtigen sollten?
+                        Do you have any specific milestones or deadlines we should consider?
                     </p>
                     <textarea
                         value={textAreaValue}
                         onChange={handleTextChange}
-                        placeholder="Bitte geben Sie Details ein..."
+                        placeholder="Please enter details ..."
                         className="mt-4 w-full p-2 border rounded"
                         style={{ minHeight: "100px" }}
                     />

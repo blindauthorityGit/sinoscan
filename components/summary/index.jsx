@@ -51,22 +51,22 @@ const SummaryComponent = () => {
                         <strong>Name:</strong> {personalInfo.name}
                     </p>
                     <p>
-                        <strong>Firma:</strong> {personalInfo.company}
+                        <strong>Company:</strong> {personalInfo.company}
                     </p>
                     <p>
                         <strong>Email:</strong> {personalInfo.email}
                     </p>
                     <p>
-                        <strong>Telefon:</strong> {personalInfo.phone}
+                        <strong>Phone:</strong> {personalInfo.phone}
                     </p>
                     <p className="mt-3">
                         <strong>Budgetoption:</strong> {budgetOption || "Keine Angabe"}
                     </p>
                     <p>
-                        <strong>Zeitrahmen:</strong> {timeframeOption || "Keine Angabe"}
+                        <strong>Time frame:</strong> {timeframeOption || "Keine Angabe"}
                     </p>
                     <p className="mt-3 hyphens-auto">
-                        <strong>Projektbeschreibung:</strong>
+                        <strong>Project description:</strong>
                         <p> {textValue || "Keine Angabe"}</p>
                     </p>
                     {/* <p>
@@ -74,8 +74,8 @@ const SummaryComponent = () => {
                 </p> */}
                 </div>
                 <div>
-                    <h2 className="text-xl font-semibold mt-8 lg:mt-0 text-primaryColor mb-3">Projektdetails</h2>
-                    <h3 className=" font-semibold text-gray-700">Ausgewählte Services:</h3>
+                    <h2 className="text-xl font-semibold mt-8 lg:mt-0 text-primaryColor mb-3">Project details</h2>
+                    <h3 className=" font-semibold text-gray-700">Selected services:</h3>
                     <ul>
                         {selectedServices.map((service) => (
                             <li className="text-sm" key={service}>
@@ -86,26 +86,26 @@ const SummaryComponent = () => {
                             </li>
                         ))}
                     </ul>
-                    <h3 className=" font-semibold text-gray-700">Stadium des Konzepts:</h3>
+                    <h3 className=" font-semibold text-gray-700">Stage of the concept:</h3>
                     <ul>
                         {selectedStages.map((stage) => (
                             <li key={stage}>{stage}</li>
                         ))}
                     </ul>
-                    <h3 className=" font-semibold text-gray-700">Spezifische Anforderungen:</h3>
+                    <h3 className=" font-semibold text-gray-700">Specific requirements:</h3>
                     <ul className="list-disc list-inside	">
                         {selectedRequirements.map((requirement) => (
                             <li key={requirement} dangerouslySetInnerHTML={{ __html: requirement }}></li>
                         ))}
                     </ul>
-                    <h3 className=" font-semibold text-gray-700">Zielgruppe / Markt:</h3>
+                    <h3 className=" font-semibold text-gray-700">Target group / market:</h3>
                     <ul>
                         {selectedMarket.map((market) => (
                             <li key={market}>{market}</li>
                         ))}
                     </ul>
-                    <h3 className=" font-semibold text-gray-700">Zusätzliche Nachricht:</h3>
-                    <p>{textAreaValue || "Keine Angabe"}</p>
+                    <h3 className=" font-semibold text-gray-700">Additional message:</h3>
+                    <p>{textAreaValue || "Not specified"}</p>
                 </div>
                 <div className="col-span-2">
                     <h3 className=" font-semibold text-gray-700  mt-8 lg:mt-0">Hochgeladene Dateien:</h3>
@@ -126,7 +126,7 @@ const SummaryComponent = () => {
                 </div>
             </div>
             <div className="col-span-12 mt-0">
-                <div className="flex items-center mb-4">
+                {/* <div className="flex items-center mb-4">
                     <input
                         id="newsletterCheckbox" // Unique ID for the checkbox
                         type="checkbox"
@@ -137,7 +137,7 @@ const SummaryComponent = () => {
                     <label htmlFor="newsletterCheckbox" className="text-sm text-gray-700 flex-1">
                         Sie werden für unseren Newsletter angemeldet, um Updates zu erhalten.
                     </label>
-                </div>
+                </div> */}
 
                 <div className="flex items-center">
                     {" "}
@@ -152,7 +152,7 @@ const SummaryComponent = () => {
                         htmlFor="agb" // Unique ID for the checkbox
                         className="text-sm text-gray-700"
                     >
-                        Ich stimme den Allgemeinen Geschäftsbedingungen zu.
+                        I accept the general Terms and Conditions.
                     </label>
                 </div>
             </div>

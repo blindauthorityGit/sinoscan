@@ -100,7 +100,7 @@ export default async function handler(req, res) {
                     <p>Dear ${req.body.personalInfo.name},</p>
                     <p>Thank you for your request!</p>
                     <p>One of our employees will get in touch with you shortly.</p>
-              
+    
                     <br>
                     <p>Best regards,</p>
                     <p><strong>Malene Newman</strong></p>

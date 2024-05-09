@@ -45,7 +45,7 @@ export default {
             boxes: [
                 {
                     id: 1,
-                    headline: "Produktdesign",
+                    headline: "Product design",
                     text: "Entwicklung von Konzepten und Designs für neue Produkte",
                     icon: Produktdesign,
                     selected: false,

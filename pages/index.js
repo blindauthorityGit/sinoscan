@@ -277,7 +277,10 @@ export default function Home() {
             <MainContainer width="container mx-auto pt-4 font-sans ">
                 <div className="col-span-12 px-4 lg:pl-0 lg:col-span-8 lg:pr-8 pt-2">
                     <div className="topBar flex justify-between">
-                        <img className="w-2/4 lg:w-auto" src={Logo.src} alt="" />
+                        <a href="https://www.sinoscan.com">
+                            {" "}
+                            <img className="w-2/4 lg:w-auto" src={Logo.src} alt="" />
+                        </a>
                         <div className="text-right text-xs lg:text-base font-sans font-semibold underline">
                             <a href="tel:+16306919546">+1 630-691-9546</a>
                             <br />

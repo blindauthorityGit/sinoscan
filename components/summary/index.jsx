@@ -46,7 +46,7 @@ const SummaryComponent = () => {
         <>
             <div className="bg-white p-4 rounded w-full my-0 col-span-12 lg:grid lg:grid-cols-2 gap-4 text-primaryColor font-sans">
                 <div>
-                    <h2 className="text-xl font-semibold text-primaryColor mb-3">Persönliche Informationen</h2>
+                    <h2 className="text-xl font-semibold text-primaryColor mb-3">Personal information</h2>
                     <p className="">
                         <strong>Name:</strong> {personalInfo.name}
                     </p>
@@ -108,7 +108,7 @@ const SummaryComponent = () => {
                     <p>{textAreaValue || "Not specified"}</p>
                 </div>
                 <div className="col-span-2">
-                    <h3 className=" font-semibold text-gray-700  mt-8 lg:mt-0">Hochgeladene Dateien:</h3>
+                    <h3 className=" font-semibold text-gray-700  mt-8 lg:mt-0">Uploaded data:</h3>
                     <ul>
                         {files.map((file, index) => (
                             <li key={index}>

@@ -60,7 +60,7 @@ export default {
                 {
                     id: 3,
                     headline: "Production-<br/>management",
-                    text: "Monitoring a nd management of manufacturing processes",
+                    text: "Monitoring and management of manufacturing processes",
                     icon: Produktionsmanagement,
                     selected: false,
                 },

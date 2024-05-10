@@ -5,14 +5,14 @@ export default function Document() {
         <Html lang="en">
             <Head />
             {/* Google Analytics Script */}
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-FG4STTVFTY"></script>
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-PSQDNHSPTV"></script>
             <script
                 dangerouslySetInnerHTML={{
                     __html: `
                             window.dataLayer = window.dataLayer || [];
                             function gtag(){dataLayer.push(arguments);}
                             gtag('js', new Date());
-                            gtag('config', 'G-FG4STTVFTY');
+                            gtag('config', 'G-PSQDNHSPTV');
                         `,
                 }}
             />

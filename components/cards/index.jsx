@@ -88,11 +88,11 @@ const Card = ({ length, headline, text, icon, id, isActive, onClick, answer }) =
             <h3
                 lang="de"
                 className={`${
-                    smallCap ? "!text-xs lg:!text-lg" : null
-                } font-semibold text-sm lg:text-xl hyphens-auto text-center`}
+                    smallCap ? "!text-xs lg:!text-base 2xl:!text-lg" : null
+                } font-semibold text-sm lg:text-base 2xl:text-xl hyphens-auto text-center`}
                 dangerouslySetInnerHTML={{ __html: headline }}
             ></h3>
-            {length > 4 ? null : <p className="text-sm hidden lg:block text-center">{text}</p>}
+            {length > 4 ? null : <p className="text-xs 2xl:text-sm hidden lg:block text-center">{text}</p>}
         </motion.div>
     );
 };

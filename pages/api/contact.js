@@ -1,53 +1,95 @@
 import nodemailer from "nodemailer";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
-import { saveToFirestore, uploadFile, moveToPermanentStorage } from "../../config/firebase";
+import { saveToFirestore, uploadFile, moveToPermanentStorage, saveConfirmationToken } from "../../config/firebase";
 
 async function subscribeToNewsletter(email, name, phone, company, service, stadium, anforderungen, zielgruppe) {
-    const data = {
-        email_address: email,
-        status: "subscribed",
-        // Uncomment and complete merge_fields if you want to use them
-        merge_fields: {
-            FNAME: name.split(" ")[0],
-            LNAME: name.split(" ")[1],
-            PHONE: phone,
-            COMPANY: company,
-            SERVICE: service,
-            STADIUM: stadium,
-            REQS: anforderungen.join(", "),
-            ZIELGRUPPE: zielgruppe.join(", "),
+    const token = uuidv4();
+    await saveConfirmationToken(email, token);
+
+    const confirmationLink = `${
+        process.env.NEXT_DEV === "true" ? process.env.NEXT_DEV_URL : process.env.NEXT_LIVE_URL
+    }/api/confirm?token=${token}`;
+
+    const transporter = nodemailer.createTransport({
+        host: process.env.NEXT_DEV === "true" ? "smtp.world4you.com" : "smtp.office365.com",
+        port: 587,
+        secure: false,
+        auth: {
+            user: process.env.NEXT_DEV === "true" ? process.env.NEXT_W4YUSER : process.env.NEXT_SINOSCAN_EMAIL,
+            pass:
+                process.env.NEXT_DEV === "true"
+                    ? process.env.NEXT_W4YPASSWORD
+                    : process.env.NEXT_SINOSCAN_EMAIL_PASSWORD,
         },
+    });
+
+    const mailOptions = {
+        from: process.env.NEXT_DEV === "true" ? "office@atelierbuchner.at" : process.env.NEXT_SINOSCAN_EMAIL,
+        to: email,
+        subject: "Bitte bestätigen Sie Ihr Abonnement",
+        html: `
+            <p>Sehr geehrte/r ${name},</p>
+            <p>Vielen Dank für Ihre Anmeldung zu unserem Newsletter. Bitte bestätigen Sie Ihr Abonnement, indem Sie auf den untenstehenden Link klicken:</p>
+            <a href="${confirmationLink}">Abonnement bestätigen</a>
+            <br>
+            <p>Viele Grüße / Best Regards,</p>
+            <p><strong>Tanja</strong></p>
+            <p><strong>SinoScan | Deutschland</strong></p>
+            <p>SinoScan Design | Engineering | Manufacturing</p>
+            <img src="https://sinoscan.vercel.app/logo.jpg" style="width: 100px; height: auto;"/>
+            <p><strong>TEL</strong> +49 6103 8055685 | <strong>MOBIL</strong> +49 176 31144326 | <strong>MAIL</strong> tanja.behnisch@sinoscan.com | <strong>WEB</strong> www.sinoscan.de</p>
+        `,
     };
 
-    try {
-        const response = await axios.post(
-            `https://${process.env.NEXT_SERVER_PREFIX}.api.mailchimp.com/3.0/lists/${process.env.NEXT_LIST_ID}/members/`,
-            data,
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${process.env.NEXT_MAILCHIMP_API}`,
-                },
-            }
-        );
-        console.log("Subscription successful", response.data);
-        return response.data;
-    } catch (error) {
-        if (error.response && error.response.data) {
-            const errorData = error.response.data;
-            // Mailchimp error code for already existing subscriber is 'Member Exists'
-            if (errorData.title === "Member Exists") {
-                console.log("Subscriber already exists, no action taken.");
-                return { status: "already_subscribed", detail: errorData.detail };
-            } else {
-                console.error("Mailchimp Error:", errorData.detail);
-                throw new Error("Failed to subscribe to newsletter: " + errorData.detail);
-            }
-        } else {
-            throw new Error("Failed to connect to Mailchimp.");
-        }
-    }
+    await transporter.sendMail(mailOptions);
+    console.log("Confirmation email sent to", email);
+
+    // const data = {
+    //     email_address: email,
+    //     status: "subscribed",
+    //     // Uncomment and complete merge_fields if you want to use them
+    //     merge_fields: {
+    //         FNAME: name.split(" ")[0],
+    //         LNAME: name.split(" ")[1],
+    //         PHONE: phone,
+    //         COMPANY: company,
+    //         SERVICE: service,
+    //         STADIUM: stadium,
+    //         REQS: anforderungen.join(", "),
+    //         ZIELGRUPPE: zielgruppe.join(", "),
+    //     },
+    // };
+
+    // try {
+    //     const response = await axios.post(
+    //         `https://${process.env.NEXT_SERVER_PREFIX}.api.mailchimp.com/3.0/lists/${process.env.NEXT_LIST_ID}/members/`,
+    //         data,
+    //         {
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 Authorization: `Bearer ${process.env.NEXT_MAILCHIMP_API}`,
+    //             },
+    //         }
+    //     );
+    //     console.log("Subscription successful", response.data);
+    //     return response.data;
+    // } catch (error) {
+    //     if (error.response && error.response.data) {
+    //         const errorData = error.response.data;
+    //         // Mailchimp error code for already existing subscriber is 'Member Exists'
+    //         if (errorData.title === "Member Exists") {
+    //             console.log("Subscriber already exists, no action taken.");
+    //             return { status: "already_subscribed", detail: errorData.detail };
+    //         } else {
+    //             console.error("Mailchimp Error:", errorData.detail);
+    //             throw new Error("Failed to subscribe to newsletter: " + errorData.detail);
+    //         }
+    //     } else {
+    //         throw new Error("Failed to connect to Mailchimp.");
+    //     }
+    // }
 }
 
 export default async function handler(req, res) {

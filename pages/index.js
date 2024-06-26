@@ -303,7 +303,7 @@ export default function Home() {
                         </p>
                     </div>
                     <div className="text mt-6 lg:mt-12 text-primaryColor">
-                        <h2 className="font-sans font-semibold text-xl lg:text-5xl">
+                        <h2 className="font-sans font-semibold text-xl lg:text-3xl 2xl:text-5xl">
                             {config.steps[currentStep].headline}
                         </h2>
                         <p className="mt-3 lg:mt-6 text-sm">{config.steps[currentStep].subline}</p>

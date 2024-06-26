@@ -35,7 +35,7 @@ async function subscribeToNewsletter(email, name, phone, company, service, stadi
             <a href="${confirmationLink}">Abonnement bestätigen</a>
             <br>
             <p>Viele Grüße / Best Regards,</p>
-            <p><strong>Tanja</strong></p>
+            <p><strong>Tanja Behnisch</strong></p>
             <p><strong>SinoScan | Deutschland</strong></p>
             <p>SinoScan Design | Engineering | Manufacturing</p>
             <img src="https://sinoscan.vercel.app/logo.jpg" style="width: 100px; height: auto;"/>
@@ -145,7 +145,7 @@ export default async function handler(req, res) {
               
                     <br>
                     <p>Viele Grüße / Best Regards,</p>
-                    <p><strong>Tanja</strong></p>
+                    <p><strong>Tanja Behnisch</strong></p>
                     <p><strong>SinoScan | Deutschland</strong></p>
                     <p>SinoScan Design | Engineering | Manufacturing</p>
                     <img src="https://sinoscan.vercel.app/logo.jpg" style="width: 100px; height: auto;"/>

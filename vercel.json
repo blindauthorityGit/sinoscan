@@ -1,9 +1,9 @@
 {
     "functions": {
-      "api/contact.js": {
+      "pages/api/contact.js": {
         "maxDuration": 30 
       },
-      "api/*.js": {
+      "pages/api/*.js": {
         "maxDuration": 30
       }
     }

@@ -37,7 +37,7 @@ export default {
         {
             id: 1,
             headline: "What type of service do you need?",
-            subline: "Please select the service most suitable for your projea:",
+            subline: "Please select the service most suitable for your project:",
             image: One,
             multipleChoice: false,
             hasBoxes: true,

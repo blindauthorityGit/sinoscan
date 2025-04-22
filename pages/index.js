@@ -282,9 +282,9 @@ export default function Home() {
                             <img className="w-2/4 lg:w-auto" src={Logo.src} alt="" />
                         </a>
                         <div className="text-right text-xs lg:text-base font-sans font-semibold underline">
-                            <a href="tel:+16306919546">+1 630-691-9546</a>
+                            <a href="tel:+16132173688">+1 613-217-3688</a>
                             <br />
-                            <a href="mailto:malene.newman@sinoscan.com">malene.newman@sinoscan.com</a>
+                            <a href="mailto:Dean.Bellefleur@sinoscan.com">Dean.Bellefleur@sinoscan.com</a>
                         </div>
                     </div>
                     <div className="stepCounter mt-6 lg:mt-16">

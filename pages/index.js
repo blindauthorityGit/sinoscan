@@ -282,7 +282,7 @@ export default function Home() {
                             <a href="tel:+4961038055685">+49 (0) 6103 805 56 85</a>
                             <br />
                             <a href="mailto:info@sinoscan.de">info@sinoscan.de</a> <br />
-                            <a className="mt-2 block" href="https://www.sinoscan.de">
+                            <a className="mt-2 yes block" href="https://www.sinoscan.de">
                                 sinoscan.de
                             </a>
                         </div>

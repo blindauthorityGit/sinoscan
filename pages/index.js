@@ -281,7 +281,10 @@ export default function Home() {
                         <div className="text-right text-xs lg:text-base font-sans font-semibold underline">
                             <a href="tel:+4961038055685">+49 (0) 6103 805 56 85</a>
                             <br />
-                            <a href="mailto:info@sinoscan.de">info@sinoscan.de</a>
+                            <a href="mailto:info@sinoscan.de">info@sinoscan.de</a> <br />
+                            <a className="mt-2 block" href="https://www.sinoscan.de">
+                                sinoscan.de
+                            </a>
                         </div>
                     </div>
                     <div className="stepCounter mt-6 lg:mt-16">

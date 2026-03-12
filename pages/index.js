@@ -74,7 +74,7 @@ export default function Home() {
         currentStepConfig.component,
         budgetOption,
         timeframeOption,
-        personalInfo
+        personalInfo,
     );
     const renderComponent = (step, activeIds, handleCardClick) => {
         if (step.component) {
@@ -279,7 +279,7 @@ export default function Home() {
                     <div className="topBar flex justify-between">
                         <img className="w-2/4 lg:w-auto" src={Logo.src} alt="" />
                         <div className="text-right text-xs lg:text-base font-sans font-semibold underline">
-                            <a href="tel:+4961038055685">+49 (0) 6103 805 56 85</a>
+                            <a href="tel:++4921516419207">+49 2151 6419207</a>
                             <br />
                             <a href="mailto:info@sinoscan.de">info@sinoscan.de</a> <br />
                             <a className="mt-2 yes block" href="https://www.sinoscan.de">
@@ -331,7 +331,7 @@ export default function Home() {
                             <button
                                 className="flex-1 sm:flex-initial px-4 sm:px-8 py-2 border border-primaryColor text-primaryColor font-semibold mr-2 sm:mr-4 bg-transparent"
                                 onClick={() => {
-                                    setCurrentStep(currentStep - 1), scrollTo(0, 0);
+                                    (setCurrentStep(currentStep - 1), scrollTo(0, 0));
                                 }}
                                 disabled={!isEnabledBack}
                             >
@@ -407,11 +407,11 @@ export default function Home() {
                         </div>
                         <div className="right">
                             <p>
-                                Otto-Hahn-Str. 36
+                                SinoScan GmbH
                                 <br />
-                                63303 Dreieich
+                                Spatzenwinkel 25
                                 <br />
-                                Germany
+                                D- 47918 Tönisvorst
                             </p>
                         </div>
                     </div>

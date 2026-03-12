@@ -16,12 +16,12 @@ const datenschutz = () => {
                 <address>
                     SinoScan GmbH
                     <br />
-                    Otto-Hahn-Straße 36
+                    Spatzenwinkel 25
                     <br />
-                    63303 Dreieich
+                    D- 47918 Tönisvorst
                     <br />
                     <br />
-                    Telefon: <a href="tel:+4961038055685">+49 6103 805 56 85</a>
+                    Telefon: <a href="tel:+4921516419207">+49 2151 6419207</a>
                     <br />
                     E-Mail: <a href="mailto:info@sinoscan.de">info@sinoscan.de</a>
                 </address>
